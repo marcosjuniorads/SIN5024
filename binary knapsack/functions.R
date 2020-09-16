@@ -6,7 +6,7 @@
 
 
 obter_capacidade <- function(nome_arquivo) {
-  path <- paste0(getwd(), "/instancias/mochila/", nome_arquivo)
+  path <- paste0(getwd(), "/binary knapsack/instancias/", nome_arquivo)
   data <- read.delim(path, header = FALSE, comment.char = "#")
 
   return(as.numeric(as.character(data[1, ])))
@@ -14,7 +14,7 @@ obter_capacidade <- function(nome_arquivo) {
 
 
 obter_num_itens <- function(nome_arquivo) {
-  path <- paste0(getwd(), "/instancias/mochila/", nome_arquivo)
+  path <- paste0(getwd(), "/binary knapsack/instancias/", nome_arquivo)
   data <- read.delim(path, header = FALSE, comment.char = "#")
 
   return(as.numeric(as.character(data[2, ])))
@@ -22,7 +22,7 @@ obter_num_itens <- function(nome_arquivo) {
 
 
 obter_valor_peso <- function(nome_arquivo) {
-  path <- paste0(getwd(), "/instancias/mochila/", nome_arquivo)
+  path <- paste0(getwd(), "/binary knapsack/instancias/", nome_arquivo)
   data <- read.delim(path, header = FALSE, comment.char = "#")
 
   valor_item <- as.numeric(strsplit(as.character(data[3, ]), " ")[[1]])
@@ -48,7 +48,7 @@ imprime_resultados_mochila <- function(resultado) {
 
   print("     RESULTADO DA OTIMIZAÇÃO     ")
   print("---------------------------------")
-  print("QUANTOS ITENS DEVO PEGAR DE CADA?")
+  print("QUAIS ITENS DEVO PEGAR?")
   print(itens_escolhidos)
   print("PESO TOTAL DA MOCHILA:")
   print(sum(itens_escolhidos * peso_itens))
