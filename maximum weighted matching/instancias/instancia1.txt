@@ -1,0 +1,17 @@
+5
+6
+1 2 10
+1 3 1
+2 4 8
+3 4 4
+3 5 9
+4 5 2
+
+# Formato dos arquivos de entrada:
+# num_vertices
+# num_arestas
+# vertice_origem (u) vertice_destino (v) peso (p)
+# u_1 v_1 peso_1
+# u_2 v_2 peso_2
+# ...
+# u_n v_n peso_n  ### ONDE n = num_arestas

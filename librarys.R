@@ -6,3 +6,5 @@
 
 # carregando o pacote
 library(gurobi)
+library(igraph)
+library(tidyr)
