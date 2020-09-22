@@ -7,4 +7,5 @@
 # carregando o pacote
 library(gurobi)
 library(igraph)
+library(Matrix)
 library(tidyr)

@@ -98,3 +98,12 @@ visualizar_grafo <- function(dados_grafo) {
   plot(g, edge.label = E(g)$weight)
   rm(g)
 }
+
+imprime_weighted_matching <- function(resultado) {
+  print("     RESULTADO DA OTIMIZAÇÃO     ")
+  print("---------------------------------")
+  print("QUAIS ARESTAS DEVO ESCOLHER?")
+  print(paste("ARESTA", rep(1:length(resultado$x)))[resultado$x == 1])
+  print("QUAL PESO TOTAL DO EMPARELHAMENTO?")
+  print(resultado$objbound)
+}

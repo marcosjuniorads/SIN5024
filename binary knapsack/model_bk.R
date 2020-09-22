@@ -1,6 +1,6 @@
 # carregando as funções necessárias
 source(paste0(getwd(), "/librarys.R"))
-source(paste0(getwd(), "/binary knapsack/functions.R"))
+source(paste0(getwd(), "/binary knapsack/functions_bk.R"))
 
 # PROBLEMA: Dada uma mochila com capacidade C e N itens e respectivos pesos P e
 # valores V escolher um subconjunto de itens para colocar na mochila cuja soma
