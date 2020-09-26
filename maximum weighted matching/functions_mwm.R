@@ -50,47 +50,33 @@ obter_dados_grafo <- function(nome_arquivo) {
                            strsplit(as.character(data[i, ]), " ")[[1]])[3])
   }
 
-  grafo_data <- data.frame(vertice_u = vertice_origem,
-                           vertice_v = vertice_destino,
-                           peso = peso_vertice)
+  grafo_data <- data.frame(u = vertice_origem,
+                           v = vertice_destino,
+                           p = peso_vertice)
 
   rm(peso_vertice, vertice_destino, vertice_origem)
 
   return(grafo_data)
 }
 
-obter_lista_adjacencia <- function(dados_grafo) {
+criar_matriz_restricao <- function(dados_grafo, n_vertices, n_arestas) {
   # obtendo a lista de vertices do grafo
-  lista_vertices <- unique(c(peso_arestas$vertice_u, peso_arestas$vertice_v))
-  df_adjacencia  <- setNames(data.frame(matrix(ncol = length(lista_vertices),
-                                               nrow = 0)),
-                             c(lista_vertices))
+  lista_vertices <- unique(c(dados_grafo$u, dados_grafo$v))
+
+  # criando matrix que armazenará as restrições para o problema.
+  m_restricao <- matrix(data = 0, # 1 quando a aresta está conect. com o vértice
+                        nrow = length(lista_vertices), # qnt de vértices
+                        ncol = nrow(dados_grafo),
+                        dimnames = list(paste0("VERTICE_", rep(1:n_vertices)),
+                                        paste0("ARESTA_", rep(1:n_arestas))))
 
   for (vertice in lista_vertices) {
-    vizinhos1    <- peso_arestas %>%
-                    dplyr::filter(vertice_u == vertice)
-    vizinhos1    <- vizinhos1$vertice_v
+    arestas_relacionadas <- unique(c(which(dados_grafo$u == vertice),
+                                     which(dados_grafo$v == vertice)))
 
-    vizinhos2    <- peso_arestas %>%
-                    dplyr::filter(vertice_v == vertice)
-    vizinhos2    <- vizinhos2$vertice_u
-
-    v_adjacentes <- unique(c(vizinhos1, vizinhos2))
-
-    df_adjacencia <- rbind(df_adjacencia,
-                           paste(v_adjacentes, collapse = ' '),
-                           stringsAsFactors = FALSE)
-    rm(vizinhos1, vizinhos2, v_adjacentes)
+    m_restricao[vertice, arestas_relacionadas] <- 1
   }
-
-  names(df_adjacencia) <- c("vizinhos")
-  df_adjacencia <- separate(data = df_adjacencia,
-                            col = "vizinhos", sep = " ",
-                            into = paste0("vizinho_",
-                                   as.character(rep(1:length(lista_vertices))))
-                            )
-  df_adjacencia <- df_adjacencia[, !apply(is.na(df_adjacencia), 2, all)]
-  return(df_adjacencia)
+  return(m_restricao)
 }
 
 visualizar_grafo <- function(dados_grafo) {
