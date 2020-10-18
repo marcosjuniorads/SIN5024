@@ -6,10 +6,12 @@ source(paste0(getwd(), "/convex recoloration/functions_rc.R"),
 # lendo os dados dos arquivos de entrada - lista com cores para os vértices.
 nome_arq <- "exemplo_simples.txt"
 
+# lendo os arquivos e obtendo os dados necessários para input no solver.
 n_vertices    <- obter_numero_vertices(nome_arq)
 n_cores       <- obter_numero_cores(nome_arq)
 cor_vertices  <- obter_lista_cores(nome_arq)
 comb_vertices <- obter_combinacao_vertices(nome_arq)
+fun_objetivo  <- obter_funcao_objetivo(n_vertices, n_cores, cor_vertices)
 
 # GERANDO O MODELO ------ 
 # inicialmente criei as matrizes na mão...
@@ -27,19 +29,6 @@ model$A <- matrix(data = c(1, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0,
                  ncol = 8)
 
 # SEGUNDA RESTRIÇÃO. Garantir a convexidade entre eles.
-
-# Primeira tentativa - NOT WORKING
-# cor_1 <- matrix(data = c(1, 1, 1, 0, 0, 0, 0, 0, -1, -1, 0, 1, 0, 0, 0, 0, 1,
-#                            0, -1, -1, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0),
-#                 nrow = 4,
-#                 ncol = 8)
-# 
-# cor_2 <- matrix(data = c(0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, -1, -1, 0, 1, 0,
-#                          0, 0, 0, 1, 0, -1, -1, 0, 0, 0, 0, 0, 1, 1, 1),
-#                 nrow = 4,
-#                 ncol = 8)
-
-
 # Segunda tentativa - matriz para a restrição de convexidade cor 1
 # matriz esparsa onde -> j = col e i = lin
 # acho que deu certo....

@@ -40,3 +40,29 @@ obter_combinacao_vertices <- function(nome_arquivo) {
   n_vertices <- obter_numero_vertices(nome_arquivo)
   return(combn(c(1:n_vertices), 3))
 }
+
+obter_funcao_objetivo <- function(numero_vertices, numero_cores, lista_cor) {
+
+  # fazendo eventuais conversões para o formato correto, caso necessário
+  numero_vertices <- as.numeric(numero_vertices)
+  numero_cores <- as.numeric(numero_cores)
+
+  # obtendo o total de combinações.
+  vetor_fo <- rep(1, numero_vertices * numero_cores)
+
+  # apenas gerando nomes para cada casela do vetor.
+  names_vetor <- expand.grid(paste0("V", rep(1:numero_vertices)),
+                             unique(cor_vertices)) %>% arrange(Var1)
+  names_vetor <- paste(names_vetor$Var1, names_vetor$Var2, sep = "_")
+
+  # nomeando o vetor
+  names(vetor_fo) <- names_vetor
+
+  # preenchendo o vetor com 0 para as caselas que contém a mesma cor do vertice
+  for (vertice in 1:numero_vertices) {
+    name <- paste0("V", vertice, "_", lista_cor[vertice])
+    vetor_fo[[name]] <- 0
+  }
+
+  return(vetor_fo)
+}
