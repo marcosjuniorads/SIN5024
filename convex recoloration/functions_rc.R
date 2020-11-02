@@ -66,3 +66,45 @@ obter_funcao_objetivo <- function(numero_vertices, numero_cores, lista_cor) {
 
   return(vetor_fo)
 }
+
+gerar_restricao2 <- function(n_vertices, n_cores, matriz_combin) {
+  # garantindo que todos os parâmetros estejam no formato correto
+  n_vertices <- as.integer(n_vertices)
+  n_cores <- as.integer(n_cores)
+
+  # criando as matrizes com as regras de validação
+  regra_validacao <- matrix(data = c(1, 1, 0, 0, 1, 0, 0, 1, -1, 0, -1, 0, 0,
+                                     -1, 0, -1, 1, 0, 0, 1, 1, 1, 0, 0),
+                            nrow = 8,
+                            ncol = 3)
+
+  # criando a matriz e preenchendo com 0
+  r2 <- matrix(data = 0,
+               ncol = n_cores * n_vertices,
+               nrow = ncol(matriz_combin) * 8 * n_cores,
+               dimnames = list(NULL, names(fun_objetivo)))
+
+  inicio <- 1
+  # preenchenco a matriz com 1.
+  for (cor in 1:n_cores) {
+    for (n_combinacao in 1:ncol(matriz_combin)) {
+      comb <- matriz_combin[, n_combinacao]
+
+      # primeiro item
+      vertice_i = paste0("V", comb[1], "_", cor)
+      r2[inicio:(inicio + 7), vertice_i] <- c(regra_validacao[, 1])
+
+      # segundo item
+      vertice_i = paste0("V", comb[2], "_", cor)
+      r2[inicio:(inicio + 7), vertice_i] <- c(regra_validacao[, 2])
+
+      # terceiro item
+      vertice_i = paste0("V", comb[3], "_", cor)
+      r2[inicio:(inicio + 7), vertice_i] <- c(regra_validacao[, 3])
+
+      inicio <- inicio + 8
+    }
+  }
+
+  return(r2)
+}
