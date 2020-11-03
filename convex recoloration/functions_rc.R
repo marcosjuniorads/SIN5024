@@ -67,7 +67,33 @@ obter_funcao_objetivo <- function(numero_vertices, numero_cores, lista_cor) {
   return(vetor_fo)
 }
 
-gerar_restricao2 <- function(n_vertices, n_cores, matriz_combin) {
+
+gerar_restricao1 <- function(n_vertices, n_cores, fun_objetivo) {
+  # garantindo que todos os parâmetros estejam no formato correto
+  n_vertices <- as.integer(n_vertices)
+  n_cores <- as.integer(n_cores)
+
+  # criando a matriz e preenchendo com 0
+  r1 <- matrix(data = 0,
+               ncol = n_cores * n_vertices,
+               nrow = n_vertices,
+               dimnames = list(NULL, names(fun_objetivo)))
+
+  inicio <- 1
+  # preenchenco a matriz com 1.
+  for (vertice in 1:n_vertices) {
+    for (cor in 1:n_cores) {
+      vertice_i = paste0("V", vertice, "_", cor)
+      r1[inicio, vertice_i] <- 1
+    }
+    inicio <- inicio + 1
+  }
+
+  return(r1)
+}
+
+
+gerar_restricao2 <- function(n_vertices, n_cores, matriz_combin, fun_objetivo) {
   # garantindo que todos os parâmetros estejam no formato correto
   n_vertices <- as.integer(n_vertices)
   n_cores <- as.integer(n_cores)
