@@ -127,3 +127,75 @@ gerar_restricao2 <- function(n_vertices, n_cores, matriz_combin, fun_objetivo) {
 
   return(r2)
 }
+
+gerando_relatorio <- function(nome_arq, n_vertices, n_cores, cor_vertices,
+                              fun_objetivo, res, start, gurobi_output) {
+  # nome do arquivo de LOG
+  log_file <- paste0(getwd(), "/convex recoloration/results/", nome_arq)
+
+  cat(paste( "Iniciando o processamento do arquivo:", nome_arq,
+             "\n"), file = log_file, append = FALSE, sep = "\n")
+
+  cat(paste("************* LENDO OS DADOS DE ENTRADA *************"),
+      file = log_file, append = TRUE, sep = "\n")
+
+  cat(paste( "Numero de vertices: ", n_vertices),
+      file = log_file, append = TRUE, sep = "\n")
+
+  cat(paste( "Numero de cores:    ", n_cores),
+      file = log_file, append = TRUE, sep = "\n")
+
+  cat(paste( "Cores dos vertices: ",
+             paste(cor_vertices, collapse = " " ), "\n"),
+      file = log_file, append = TRUE, sep = "\n")
+
+  cat(paste("************* GERANDO DADOS PARA O GUROBI *************"),
+      file = log_file, append = TRUE, sep = "\n")
+
+  cat(paste( "Funcao objetivo: \n", "Onde: Vn = Numero do vertice",
+             "e '_n' = numero da cor\n\n", paste(names(fun_objetivo),
+                                                 fun_objetivo,
+                                                 sep = " = ",
+                                                 collapse = ", "), "\n"),
+      file = log_file, append = TRUE, sep = "\n")
+
+  cat(paste("Restricao 1 e 2 nao apresentada para deixar arquivos menores. \n",
+            "Podem ser consultadas durante execucao do codigo. \n \n"),
+      file = log_file, append = TRUE, sep = "\n")
+
+  cat(paste("************* RESULTADOS OBTIDOS *************"),
+      file = log_file, append = TRUE, sep = "\n")
+
+  cat(paste("Status do processamento do GUROBI:", res$status),
+      file = log_file, append = TRUE, sep = "\n")
+
+  a <- res$x
+  names(a) <- names(fun_objetivo)
+  a <- a[mapply(function(X) { if (X > 0) return(T) else return(F) }, a) == T]
+  a <- gsub("_", " tem a cor final ", names(a))
+  cat(paste("SOLUCAO ENCONTRADA PARA O PROBLEMA - SEQUENCIA DE CORES:\n",
+            paste(a, collapse = "\n"), "\n"), file = log_file, append = TRUE,
+      sep = "\n")
+
+  a <- res$x
+  names(a) <- names(fun_objetivo)
+  cat(paste("RESULTADOS COMPLETOS ENCONTRADOS PELO GUROBI - RELACIONADO F. OBJ:\n",
+            paste(a, collapse = " "), "\n"), file = log_file, append = TRUE,
+      sep = "\n")
+  rm(a)
+
+  cat(paste("************* DADOS SOBRE O PROCESSAMENTO *************"),
+      file = log_file, append = TRUE, sep = "\n")
+
+  cat(paste( "Tempo, em segundos, decorrido desde a leitura",
+             "dos dados:", round(Sys.time () - start, 3)),
+      file = log_file, append = TRUE, sep = "\n")
+
+  cat(paste( "Quantidade de instancias (itercount):",
+             res$itercount, "\n"), file = log_file, append = TRUE, sep = "\n")
+
+  cat(paste("********* OUTPUT GERADO AUTOMATICAMENTE PELO GUROBI **********\n"),
+      file = log_file, append = TRUE, sep = "\n")
+
+  cat(gurobi_output, file = log_file, append = TRUE, sep = "\n")
+}
