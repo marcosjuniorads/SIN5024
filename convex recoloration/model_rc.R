@@ -4,7 +4,7 @@ source(paste0(getwd(), "/convex recoloration/functions_rc.R"),
        encoding = "UTF-8")
 
 # lendo os dados dos arquivos de entrada - lista com cores para os vértices.
-nome_arq <- "exemplo_simples.txt"
+nome_arq <- "rand_50_10.txt"
 
 # lendo os arquivos e obtendo os dados necessários para input no solver.
 n_vertices    <- obter_numero_vertices(nome_arq)
