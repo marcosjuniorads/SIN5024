@@ -1,0 +1,70 @@
+Iniciando o processamento do arquivo: rand_10_2.txt 
+
+************* LENDO OS DADOS DE ENTRADA *************
+Numero de vertices declarados no cabecalho:  10
+Numero de cores declarados no cabecalho: 2
+Numero de cores distintas REALMENTE existentes: 2
+Cores dos vertices:  1 1 2 1 1 1 1 1 2 1 
+
+************* GERANDO DADOS PARA O GUROBI *************
+Funcao objetivo: 
+ Onde: Vn = Numero do vertice e '_n' = numero da cor
+
+ V1_1 = 0, V1_2 = 1, V2_1 = 0, V2_2 = 1, V3_1 = 1, V3_2 = 0, V4_1 = 0, V4_2 = 1, V5_1 = 0, V5_2 = 1, V6_1 = 0, V6_2 = 1, V7_1 = 0, V7_2 = 1, V8_1 = 0, V8_2 = 1, V9_1 = 1, V9_2 = 0, V10_1 = 0, V10_2 = 1 
+
+Restricao 1 e 2 nao apresentada para deixar arquivos menores. 
+ Podem ser consultadas durante execucao do codigo. 
+ 
+
+************* RESULTADOS OBTIDOS *************
+Status do processamento do GUROBI: OPTIMAL
+SOLUCAO ENCONTRADA PARA O PROBLEMA - SEQUENCIA DE CORES:
+ V1 tem a cor final 1
+V2 tem a cor final 1
+V3 tem a cor final 1
+V4 tem a cor final 1
+V5 tem a cor final 1
+V6 tem a cor final 1
+V7 tem a cor final 1
+V8 tem a cor final 1
+V9 tem a cor final 2
+V10 tem a cor final 2 
+
+RESULTADOS COMPLETOS ENCONTRADOS PELO GUROBI - RELACIONADO A FUNÇÃO OBJETIVO:
+ 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 0 1 0 1 
+
+************* DADOS SOBRE O PROCESSAMENTO *************
+Tempo, em segundos, decorrido desde a leitura dos dados: 0.758
+Quantidade de instancias (itercount): 4 
+
+******** OUTPUT GERADO AUTOMATICAMENTE PELO GUROBI *********
+
+Gurobi Optimizer version 9.0.3 build v9.0.3rc0 (win64)
+Optimize a model with 250 rows, 20 columns and 740 nonzeros
+Model fingerprint: 0x6e98d995
+Variable types: 0 continuous, 20 integer (20 binary)
+Coefficient statistics:
+  Matrix range     [1e+00, 1e+00]
+  Objective range  [1e+00, 1e+00]
+  Bounds range     [0e+00, 0e+00]
+  RHS range        [1e+00, 1e+00]
+Found heuristic solution: objective 3.0000000
+Presolve removed 10 rows and 10 columns
+Presolve time: 0.01s
+Presolved: 240 rows, 10 columns, 720 nonzeros
+Variable types: 0 continuous, 10 integer (10 binary)
+
+Root relaxation: objective 2.000000e+00, 4 iterations, 0.00 seconds
+
+    Nodes    |    Current Node    |     Objective Bounds      |     Work
+ Expl Unexpl |  Obj  Depth IntInf | Incumbent    BestBd   Gap | It/Node Time
+
+*    0     0               0       2.0000000    2.00000  0.00%     -    0s
+
+Explored 0 nodes (4 simplex iterations) in 0.01 seconds
+Thread count was 4 (of 4 available processors)
+
+Solution count 2: 2 3 
+
+Optimal solution found (tolerance 1.00e-04)
+Best objective 2.000000000000e+00, best bound 2.000000000000e+00, gap 0.0000%

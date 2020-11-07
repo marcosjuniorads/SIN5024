@@ -1,0 +1,16 @@
+Iniciando o processamento do arquivo: rand_30_9.txt 
+
+************* LENDO OS DADOS DE ENTRADA *************
+Numero de vertices declarados no cabecalho:  30
+Numero de cores declarados no cabecalho: 9
+Numero de cores distintas REALMENTE existentes: 8
+Cores dos vertices:  5 4 3 9 1 1 5 3 6 4 3 8 6 5 4 8 3 4 5 8 3 2 8 9 8 4 3 8 3 4 
+
+******** DADOS DE ENTRADA INCONSISTENTES!!!!!!!!! *********
+ ******** DADOS DE ENTRADA INCONSISTENTES!!!!!!!!! *********
+ ******** DADOS DE ENTRADA INCONSISTENTES!!!!!!!!! *********
+ ******** DADOS DE ENTRADA INCONSISTENTES!!!!!!!!! *********
+ ******** DADOS DE ENTRADA INCONSISTENTES!!!!!!!!! *********
+ ******** DADOS DE ENTRADA INCONSISTENTES!!!!!!!!! *********
+ ******** DADOS DE ENTRADA INCONSISTENTES!!!!!!!!! *********
+

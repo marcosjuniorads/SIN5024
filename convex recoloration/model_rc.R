@@ -4,51 +4,68 @@ source(paste0(getwd(), "/convex recoloration/functions_rc.R"),
        encoding = "UTF-8")
 
 # obtendo lista de arquivos de instâncias que serão processadas
-files <- list.files(path = "./convex recoloration/instancias", full.names = T)
+files <- list.files(path = "./convex recoloration/instancias")
 
-# lendo os dados dos arquivos de entrada.
-nome_arq <- "rand_50_10.txt"
-start <- Sys.time () # começando a contabilizar, a partir daqui, o tempo
+# iterando sobre todos os arquivos para processamento de todos os arquivos!
+for (nome_arq in files) {
 
-# Obtendo os dados necessários para input no solver.
-n_vertices    <- obter_numero_vertices(nome_arq)
-n_cores       <- obter_numero_cores(nome_arq)
-cor_vertices  <- obter_lista_cores(nome_arq)
-comb_vertices <- obter_combinacao_vertices(nome_arq)
-fun_objetivo  <- obter_funcao_objetivo(n_vertices, n_cores, cor_vertices)
-restricao1    <- gerar_restricao1(n_vertices, n_cores, fun_objetivo)
-restricao2    <- gerar_restricao2(n_vertices, n_cores, comb_vertices, fun_objetivo)
+    start <- Sys.time () # começando a contabilizar, a partir daqui, o tempo
 
-# variável que armazenará o output do GUROBI que será impresso no relatório
-stdout <- vector('character')
-con    <- textConnection('stdout', 'wr', local = TRUE)
-sink(con)
+    # Obtendo os dados necessários para input no solver.
+    n_vertices    <- obter_numero_vertices(nome_arq)
+    cor_vertices  <- obter_lista_cores(nome_arq)
+    n_cores       <- obter_numero_cores(nome_arq)
+    comb_vertices <- obter_combinacao_vertices(nome_arq)
 
-# GERANDO O MODELO ------
-model <- list() # iniciando o modelo do GUROBI
+    # se arquivo de entrada estiver inconsistente, GUROBI não é chamado.
+    if (as.numeric(n_cores) != length(unique(obter_lista_cores(nome_arq)))) {
+        gerando_relatorio(nome_arq, n_vertices, n_cores, cor_vertices,
+                          start = start, inconsistencia = TRUE)
+    } else {
+        fun_objetivo <- obter_funcao_objetivo(n_vertices, n_cores, cor_vertices)
+        restricao1   <- gerar_restricao1(n_vertices, n_cores, fun_objetivo)
+        restricao2   <- gerar_restricao2(n_vertices, n_cores, comb_vertices,
+                                         fun_objetivo)
 
-# passando a função objetivo
-model$obj <- fun_objetivo
+        # variável que armazenará o output do GUROBI que será impresso no relatório
+        stdout <- vector('character')
+        con    <- textConnection('stdout', 'wr', local = TRUE)
+        sink(con)
 
-# passando as restrições
-model$A     <- rbind(restricao1, restricao2)
-model$rhs   <- rep(1, nrow(model$A))
-model$sense <- c(rep('=', nrow(restricao1)), rep('<=', nrow(restricao2)))
+        # INICIANDO O MODELO ------
+        model <- list() # iniciando o modelo do GUROBI
 
-# passando o nome do modelo, tipo binário e minimização
-model$modelname   <- "convex_recoloration"
-model$modelsense  <- "min"
-model$vtype       <- "B"
+        # passando a função objetivo
+        model$obj <- fun_objetivo
 
-# Otimizando - encontrando as soluções
-res <- gurobi(model)
-res$x
-res$status
+        # passando as restrições
+        model$A     <- rbind(restricao1, restricao2)
+        model$rhs   <- rep(1, nrow(model$A))
+        model$sense <- c(rep('=', nrow(restricao1)), rep('<=', nrow(restricao2)))
 
-# coletando o output gerado pelo gurobi e fechando conexão com o console output
-sink()
-close(con)
+        # passando o nome do modelo, tipo binário e minimização
+        model$modelname   <- "convex_recoloration"
+        model$modelsense  <- "min"
+        model$vtype       <- "B"
 
-# salvando os resultados em relatório que será entregue.
-gerando_relatorio(nome_arq, n_vertices, n_cores, cor_vertices, fun_objetivo,
-                  res, start, stdout)
+        # Otimizando - encontrando as soluções
+        res <- gurobi(model)
+        res$x
+        res$status
+
+        # coletando o output gerado pelo gurobi e fechando conexão com o output
+        sink()
+        close(con)
+
+        # somente gerando relatório se atender aos critérios definidos pelo
+        # professor. Deve-se gerar somente quando tempo <= 30 minutos.
+        if (start - Sys.time () > 30){
+            break
+        }
+
+        # salvando os resultados em relatório que será entregue.
+        gerando_relatorio(nome_arq, n_vertices, n_cores, cor_vertices,
+                          fun_objetivo, res, start, stdout,
+                          inconsistencia = FALSE)
+    }
+}

@@ -1,0 +1,107 @@
+Iniciando o processamento do arquivo: rand_40_2.txt 
+
+************* LENDO OS DADOS DE ENTRADA *************
+Numero de vertices declarados no cabecalho:  40
+Numero de cores declarados no cabecalho: 2
+Numero de cores distintas REALMENTE existentes: 2
+Cores dos vertices:  2 1 2 2 1 1 1 1 2 2 1 1 1 2 2 1 2 1 1 1 2 2 1 2 1 2 2 1 1 1 1 1 1 1 2 1 2 2 2 1 
+
+************* GERANDO DADOS PARA O GUROBI *************
+Funcao objetivo: 
+ Onde: Vn = Numero do vertice e '_n' = numero da cor
+
+ V1_2 = 0, V1_1 = 1, V2_2 = 1, V2_1 = 0, V3_2 = 0, V3_1 = 1, V4_2 = 0, V4_1 = 1, V5_2 = 1, V5_1 = 0, V6_2 = 1, V6_1 = 0, V7_2 = 1, V7_1 = 0, V8_2 = 1, V8_1 = 0, V9_2 = 0, V9_1 = 1, V10_2 = 0, V10_1 = 1, V11_2 = 1, V11_1 = 0, V12_2 = 1, V12_1 = 0, V13_2 = 1, V13_1 = 0, V14_2 = 0, V14_1 = 1, V15_2 = 0, V15_1 = 1, V16_2 = 1, V16_1 = 0, V17_2 = 0, V17_1 = 1, V18_2 = 1, V18_1 = 0, V19_2 = 1, V19_1 = 0, V20_2 = 1, V20_1 = 0, V21_2 = 0, V21_1 = 1, V22_2 = 0, V22_1 = 1, V23_2 = 1, V23_1 = 0, V24_2 = 0, V24_1 = 1, V25_2 = 1, V25_1 = 0, V26_2 = 0, V26_1 = 1, V27_2 = 0, V27_1 = 1, V28_2 = 1, V28_1 = 0, V29_2 = 1, V29_1 = 0, V30_2 = 1, V30_1 = 0, V31_2 = 1, V31_1 = 0, V32_2 = 1, V32_1 = 0, V33_2 = 1, V33_1 = 0, V34_2 = 1, V34_1 = 0, V35_2 = 0, V35_1 = 1, V36_2 = 1, V36_1 = 0, V37_2 = 0, V37_1 = 1, V38_2 = 0, V38_1 = 1, V39_2 = 0, V39_1 = 1, V40_2 = 1, V40_1 = 0 
+
+Restricao 1 e 2 nao apresentada para deixar arquivos menores. 
+ Podem ser consultadas durante execucao do codigo. 
+ 
+
+************* RESULTADOS OBTIDOS *************
+Status do processamento do GUROBI: OPTIMAL
+SOLUCAO ENCONTRADA PARA O PROBLEMA - SEQUENCIA DE CORES:
+ V1 tem a cor final 1
+V2 tem a cor final 1
+V3 tem a cor final 1
+V4 tem a cor final 1
+V5 tem a cor final 1
+V6 tem a cor final 1
+V7 tem a cor final 1
+V8 tem a cor final 1
+V9 tem a cor final 1
+V10 tem a cor final 1
+V11 tem a cor final 1
+V12 tem a cor final 1
+V13 tem a cor final 1
+V14 tem a cor final 1
+V15 tem a cor final 1
+V16 tem a cor final 1
+V17 tem a cor final 1
+V18 tem a cor final 1
+V19 tem a cor final 1
+V20 tem a cor final 1
+V21 tem a cor final 1
+V22 tem a cor final 1
+V23 tem a cor final 1
+V24 tem a cor final 1
+V25 tem a cor final 1
+V26 tem a cor final 1
+V27 tem a cor final 1
+V28 tem a cor final 1
+V29 tem a cor final 1
+V30 tem a cor final 1
+V31 tem a cor final 1
+V32 tem a cor final 1
+V33 tem a cor final 1
+V34 tem a cor final 1
+V35 tem a cor final 1
+V36 tem a cor final 1
+V37 tem a cor final 2
+V38 tem a cor final 2
+V39 tem a cor final 2
+V40 tem a cor final 2 
+
+RESULTADOS COMPLETOS ENCONTRADOS PELO GUROBI - RELACIONADO A FUNÇÃO OBJETIVO:
+ 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 1 0 1 0 1 0 1 0 
+
+************* DADOS SOBRE O PROCESSAMENTO *************
+Tempo, em segundos, decorrido desde a leitura dos dados: 1.003
+Quantidade de instancias (itercount): 196 
+
+******** OUTPUT GERADO AUTOMATICAMENTE PELO GUROBI *********
+
+Gurobi Optimizer version 9.0.3 build v9.0.3rc0 (win64)
+Optimize a model with 19800 rows, 80 columns and 59360 nonzeros
+Model fingerprint: 0x435e171e
+Variable types: 0 continuous, 80 integer (80 binary)
+Coefficient statistics:
+  Matrix range     [1e+00, 1e+00]
+  Objective range  [1e+00, 1e+00]
+  Bounds range     [0e+00, 0e+00]
+  RHS range        [1e+00, 1e+00]
+Found heuristic solution: objective 24.0000000
+Presolve removed 40 rows and 40 columns
+Presolve time: 0.03s
+Presolved: 19760 rows, 40 columns, 59280 nonzeros
+Variable types: 0 continuous, 40 integer (40 binary)
+
+Root relaxation: objective 1.333333e+01, 166 iterations, 0.03 seconds
+
+    Nodes    |    Current Node    |     Objective Bounds      |     Work
+ Expl Unexpl |  Obj  Depth IntInf | Incumbent    BestBd   Gap | It/Node Time
+
+     0     0   13.33333    0   40   24.00000   13.33333  44.4%     -    0s
+H    0     0                      15.0000000   13.33333  11.1%     -    0s
+     0     0     cutoff    0        15.00000   15.00000  0.00%     -    0s
+
+Cutting planes:
+  Gomory: 1
+  MIR: 465
+  Zero half: 20
+
+Explored 1 nodes (196 simplex iterations) in 0.44 seconds
+Thread count was 4 (of 4 available processors)
+
+Solution count 2: 15 24 
+
+Optimal solution found (tolerance 1.00e-04)
+Best objective 1.500000000000e+01, best bound 1.500000000000e+01, gap 0.0000%

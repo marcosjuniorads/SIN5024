@@ -1,0 +1,161 @@
+Iniciando o processamento do arquivo: rand_50_5.txt 
+
+************* LENDO OS DADOS DE ENTRADA *************
+Numero de vertices declarados no cabecalho:  50
+Numero de cores declarados no cabecalho: 5
+Numero de cores distintas REALMENTE existentes: 5
+Cores dos vertices:  1 1 3 2 5 3 2 5 5 5 4 5 5 5 1 5 5 4 5 3 2 4 1 5 1 1 3 3 4 2 5 4 5 3 3 2 3 5 1 3 1 2 2 4 3 3 2 5 1 5 
+
+************* GERANDO DADOS PARA O GUROBI *************
+Funcao objetivo: 
+ Onde: Vn = Numero do vertice e '_n' = numero da cor
+
+ V1_1 = 0, V1_3 = 1, V1_2 = 1, V1_5 = 1, V1_4 = 1, V2_1 = 0, V2_3 = 1, V2_2 = 1, V2_5 = 1, V2_4 = 1, V3_1 = 1, V3_3 = 0, V3_2 = 1, V3_5 = 1, V3_4 = 1, V4_1 = 1, V4_3 = 1, V4_2 = 0, V4_5 = 1, V4_4 = 1, V5_1 = 1, V5_3 = 1, V5_2 = 1, V5_5 = 0, V5_4 = 1, V6_1 = 1, V6_3 = 0, V6_2 = 1, V6_5 = 1, V6_4 = 1, V7_1 = 1, V7_3 = 1, V7_2 = 0, V7_5 = 1, V7_4 = 1, V8_1 = 1, V8_3 = 1, V8_2 = 1, V8_5 = 0, V8_4 = 1, V9_1 = 1, V9_3 = 1, V9_2 = 1, V9_5 = 0, V9_4 = 1, V10_1 = 1, V10_3 = 1, V10_2 = 1, V10_5 = 0, V10_4 = 1, V11_1 = 1, V11_3 = 1, V11_2 = 1, V11_5 = 1, V11_4 = 0, V12_1 = 1, V12_3 = 1, V12_2 = 1, V12_5 = 0, V12_4 = 1, V13_1 = 1, V13_3 = 1, V13_2 = 1, V13_5 = 0, V13_4 = 1, V14_1 = 1, V14_3 = 1, V14_2 = 1, V14_5 = 0, V14_4 = 1, V15_1 = 0, V15_3 = 1, V15_2 = 1, V15_5 = 1, V15_4 = 1, V16_1 = 1, V16_3 = 1, V16_2 = 1, V16_5 = 0, V16_4 = 1, V17_1 = 1, V17_3 = 1, V17_2 = 1, V17_5 = 0, V17_4 = 1, V18_1 = 1, V18_3 = 1, V18_2 = 1, V18_5 = 1, V18_4 = 0, V19_1 = 1, V19_3 = 1, V19_2 = 1, V19_5 = 0, V19_4 = 1, V20_1 = 1, V20_3 = 0, V20_2 = 1, V20_5 = 1, V20_4 = 1, V21_1 = 1, V21_3 = 1, V21_2 = 0, V21_5 = 1, V21_4 = 1, V22_1 = 1, V22_3 = 1, V22_2 = 1, V22_5 = 1, V22_4 = 0, V23_1 = 0, V23_3 = 1, V23_2 = 1, V23_5 = 1, V23_4 = 1, V24_1 = 1, V24_3 = 1, V24_2 = 1, V24_5 = 0, V24_4 = 1, V25_1 = 0, V25_3 = 1, V25_2 = 1, V25_5 = 1, V25_4 = 1, V26_1 = 0, V26_3 = 1, V26_2 = 1, V26_5 = 1, V26_4 = 1, V27_1 = 1, V27_3 = 0, V27_2 = 1, V27_5 = 1, V27_4 = 1, V28_1 = 1, V28_3 = 0, V28_2 = 1, V28_5 = 1, V28_4 = 1, V29_1 = 1, V29_3 = 1, V29_2 = 1, V29_5 = 1, V29_4 = 0, V30_1 = 1, V30_3 = 1, V30_2 = 0, V30_5 = 1, V30_4 = 1, V31_1 = 1, V31_3 = 1, V31_2 = 1, V31_5 = 0, V31_4 = 1, V32_1 = 1, V32_3 = 1, V32_2 = 1, V32_5 = 1, V32_4 = 0, V33_1 = 1, V33_3 = 1, V33_2 = 1, V33_5 = 0, V33_4 = 1, V34_1 = 1, V34_3 = 0, V34_2 = 1, V34_5 = 1, V34_4 = 1, V35_1 = 1, V35_3 = 0, V35_2 = 1, V35_5 = 1, V35_4 = 1, V36_1 = 1, V36_3 = 1, V36_2 = 0, V36_5 = 1, V36_4 = 1, V37_1 = 1, V37_3 = 0, V37_2 = 1, V37_5 = 1, V37_4 = 1, V38_1 = 1, V38_3 = 1, V38_2 = 1, V38_5 = 0, V38_4 = 1, V39_1 = 0, V39_3 = 1, V39_2 = 1, V39_5 = 1, V39_4 = 1, V40_1 = 1, V40_3 = 0, V40_2 = 1, V40_5 = 1, V40_4 = 1, V41_1 = 0, V41_3 = 1, V41_2 = 1, V41_5 = 1, V41_4 = 1, V42_1 = 1, V42_3 = 1, V42_2 = 0, V42_5 = 1, V42_4 = 1, V43_1 = 1, V43_3 = 1, V43_2 = 0, V43_5 = 1, V43_4 = 1, V44_1 = 1, V44_3 = 1, V44_2 = 1, V44_5 = 1, V44_4 = 0, V45_1 = 1, V45_3 = 0, V45_2 = 1, V45_5 = 1, V45_4 = 1, V46_1 = 1, V46_3 = 0, V46_2 = 1, V46_5 = 1, V46_4 = 1, V47_1 = 1, V47_3 = 1, V47_2 = 0, V47_5 = 1, V47_4 = 1, V48_1 = 1, V48_3 = 1, V48_2 = 1, V48_5 = 0, V48_4 = 1, V49_1 = 0, V49_3 = 1, V49_2 = 1, V49_5 = 1, V49_4 = 1, V50_1 = 1, V50_3 = 1, V50_2 = 1, V50_5 = 0, V50_4 = 1 
+
+Restricao 1 e 2 nao apresentada para deixar arquivos menores. 
+ Podem ser consultadas durante execucao do codigo. 
+ 
+
+************* RESULTADOS OBTIDOS *************
+Status do processamento do GUROBI: OPTIMAL
+SOLUCAO ENCONTRADA PARA O PROBLEMA - SEQUENCIA DE CORES:
+ V1 tem a cor final 5
+V2 tem a cor final 5
+V3 tem a cor final 5
+V4 tem a cor final 5
+V5 tem a cor final 5
+V6 tem a cor final 5
+V7 tem a cor final 5
+V8 tem a cor final 5
+V9 tem a cor final 5
+V10 tem a cor final 5
+V11 tem a cor final 5
+V12 tem a cor final 5
+V13 tem a cor final 5
+V14 tem a cor final 5
+V15 tem a cor final 5
+V16 tem a cor final 5
+V17 tem a cor final 5
+V18 tem a cor final 5
+V19 tem a cor final 5
+V20 tem a cor final 5
+V21 tem a cor final 2
+V22 tem a cor final 4
+V23 tem a cor final 1
+V24 tem a cor final 1
+V25 tem a cor final 1
+V26 tem a cor final 1
+V27 tem a cor final 3
+V28 tem a cor final 3
+V29 tem a cor final 3
+V30 tem a cor final 3
+V31 tem a cor final 3
+V32 tem a cor final 3
+V33 tem a cor final 3
+V34 tem a cor final 3
+V35 tem a cor final 3
+V36 tem a cor final 3
+V37 tem a cor final 3
+V38 tem a cor final 3
+V39 tem a cor final 3
+V40 tem a cor final 3
+V41 tem a cor final 3
+V42 tem a cor final 3
+V43 tem a cor final 3
+V44 tem a cor final 3
+V45 tem a cor final 3
+V46 tem a cor final 3
+V47 tem a cor final 3
+V48 tem a cor final 3
+V49 tem a cor final 3
+V50 tem a cor final 3 
+
+RESULTADOS COMPLETOS ENCONTRADOS PELO GUROBI - RELACIONADO A FUNÇÃO OBJETIVO:
+ 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 1 0 0 0 0 0 0 1 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 
+
+************* DADOS SOBRE O PROCESSAMENTO *************
+Tempo, em segundos, decorrido desde a leitura dos dados: 30.202
+Quantidade de instancias (itercount): 9544 
+
+******** OUTPUT GERADO AUTOMATICAMENTE PELO GUROBI *********
+
+Gurobi Optimizer version 9.0.3 build v9.0.3rc0 (win64)
+Optimize a model with 98050 rows, 250 columns and 294250 nonzeros
+Model fingerprint: 0xb2d87257
+Variable types: 0 continuous, 250 integer (250 binary)
+Coefficient statistics:
+  Matrix range     [1e+00, 1e+00]
+  Objective range  [1e+00, 1e+00]
+  Bounds range     [0e+00, 0e+00]
+  RHS range        [1e+00, 1e+00]
+Found heuristic solution: objective 31.0000000
+Presolve time: 0.32s
+Presolved: 98050 rows, 250 columns, 294250 nonzeros
+Variable types: 0 continuous, 250 integer (250 binary)
+
+Root relaxation: objective 2.100000e+01, 5022 iterations, 0.23 seconds
+
+    Nodes    |    Current Node    |     Objective Bounds      |     Work
+ Expl Unexpl |  Obj  Depth IntInf | Incumbent    BestBd   Gap | It/Node Time
+
+     0     0   21.00000    0  100   31.00000   21.00000  32.3%     -    1s
+H    0     0                      30.0000000   21.00000  30.0%     -    1s
+     0     0   23.08105    0  146   30.00000   23.08105  23.1%     -    4s
+     0     0   23.08148    0  151   30.00000   23.08148  23.1%     -    4s
+     0     0   24.86051    0  164   30.00000   24.86051  17.1%     -    6s
+     0     0   25.01672    0  162   30.00000   25.01672  16.6%     -    7s
+     0     0   25.08212    0  162   30.00000   25.08212  16.4%     -    7s
+     0     0   25.10216    0  163   30.00000   25.10216  16.3%     -    7s
+     0     0   25.10781    0  167   30.00000   25.10781  16.3%     -    7s
+     0     0   25.10809    0  167   30.00000   25.10809  16.3%     -    7s
+     0     0   25.66405    0  156   30.00000   25.66405  14.5%     -    9s
+     0     0   25.78324    0  163   30.00000   25.78324  14.1%     -    9s
+     0     0   25.79874    0  163   30.00000   25.79874  14.0%     -   10s
+     0     0   25.80786    0  165   30.00000   25.80786  14.0%     -   10s
+     0     0   25.81067    0  166   30.00000   25.81067  14.0%     -   10s
+     0     0   25.81448    0  166   30.00000   25.81448  14.0%     -   10s
+     0     0   25.81551    0  168   30.00000   25.81551  13.9%     -   10s
+     0     0   25.81563    0  169   30.00000   25.81563  13.9%     -   10s
+     0     0   26.03055    0  164   30.00000   26.03055  13.2%     -   12s
+H    0     0                      29.0000000   26.03055  10.2%     -   12s
+     0     0   26.06073    0  170   29.00000   26.06073  10.1%     -   12s
+     0     0   26.07295    0  170   29.00000   26.07295  10.1%     -   12s
+     0     0   26.08272    0  172   29.00000   26.08272  10.1%     -   12s
+     0     0   26.08865    0  172   29.00000   26.08865  10.0%     -   12s
+     0     0   26.09133    0  176   29.00000   26.09133  10.0%     -   13s
+     0     0   26.09287    0  173   29.00000   26.09287  10.0%     -   13s
+     0     0   26.09301    0  175   29.00000   26.09301  10.0%     -   13s
+     0     0   26.16049    0  168   29.00000   26.16049  9.79%     -   14s
+     0     0   26.16852    0  168   29.00000   26.16852  9.76%     -   14s
+     0     0   26.16852    0  169   29.00000   26.16852  9.76%     -   15s
+     0     0   26.21614    0  167   29.00000   26.21614  9.60%     -   16s
+     0     0   26.23412    0  169   29.00000   26.23412  9.54%     -   16s
+     0     0   26.23648    0  167   29.00000   26.23648  9.53%     -   16s
+     0     0   26.23879    0  174   29.00000   26.23879  9.52%     -   17s
+     0     0   26.23927    0  175   29.00000   26.23927  9.52%     -   17s
+     0     0   26.25938    0  163   29.00000   26.25938  9.45%     -   18s
+     0     0   26.26299    0  163   29.00000   26.26299  9.44%     -   18s
+     0     0   26.26345    0  167   29.00000   26.26345  9.44%     -   18s
+     0     0   26.26407    0  167   29.00000   26.26407  9.43%     -   19s
+     0     0   26.26413    0  170   29.00000   26.26413  9.43%     -   20s
+     0     0   26.26899    0  168   29.00000   26.26899  9.42%     -   21s
+     0     0   26.27026    0  170   29.00000   26.27026  9.41%     -   21s
+     0     0   26.27043    0  174   29.00000   26.27043  9.41%     -   21s
+     0     0   26.27271    0  165   29.00000   26.27271  9.40%     -   23s
+     0     0   26.27271    0  156   29.00000   26.27271  9.40%     -   23s
+H    0     0                      27.0000000   26.27271  2.69%     -   24s
+     0     0   26.27271    0  156   27.00000   26.27271  2.69%     -   24s
+
+Cutting planes:
+  MIR: 83
+  Zero half: 17
+  RLT: 44
+  BQP: 21
+
+Explored 1 nodes (9544 simplex iterations) in 24.31 seconds
+Thread count was 4 (of 4 available processors)
+
+Solution count 4: 27 29 30 31 
+
+Optimal solution found (tolerance 1.00e-04)
+Best objective 2.700000000000e+01, best bound 2.700000000000e+01, gap 0.0000%

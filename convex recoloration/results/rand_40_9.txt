@@ -1,0 +1,147 @@
+Iniciando o processamento do arquivo: rand_40_9.txt 
+
+************* LENDO OS DADOS DE ENTRADA *************
+Numero de vertices declarados no cabecalho:  40
+Numero de cores declarados no cabecalho: 9
+Numero de cores distintas REALMENTE existentes: 9
+Cores dos vertices:  9 6 4 5 1 3 5 7 6 9 5 8 3 3 9 3 5 9 7 2 1 8 5 4 3 6 3 1 9 8 2 4 7 5 4 7 6 7 2 5 
+
+************* GERANDO DADOS PARA O GUROBI *************
+Funcao objetivo: 
+ Onde: Vn = Numero do vertice e '_n' = numero da cor
+
+ V1_9 = 0, V1_6 = 1, V1_4 = 1, V1_5 = 1, V1_1 = 1, V1_3 = 1, V1_7 = 1, V1_8 = 1, V1_2 = 1, V2_9 = 1, V2_6 = 0, V2_4 = 1, V2_5 = 1, V2_1 = 1, V2_3 = 1, V2_7 = 1, V2_8 = 1, V2_2 = 1, V3_9 = 1, V3_6 = 1, V3_4 = 0, V3_5 = 1, V3_1 = 1, V3_3 = 1, V3_7 = 1, V3_8 = 1, V3_2 = 1, V4_9 = 1, V4_6 = 1, V4_4 = 1, V4_5 = 0, V4_1 = 1, V4_3 = 1, V4_7 = 1, V4_8 = 1, V4_2 = 1, V5_9 = 1, V5_6 = 1, V5_4 = 1, V5_5 = 1, V5_1 = 0, V5_3 = 1, V5_7 = 1, V5_8 = 1, V5_2 = 1, V6_9 = 1, V6_6 = 1, V6_4 = 1, V6_5 = 1, V6_1 = 1, V6_3 = 0, V6_7 = 1, V6_8 = 1, V6_2 = 1, V7_9 = 1, V7_6 = 1, V7_4 = 1, V7_5 = 0, V7_1 = 1, V7_3 = 1, V7_7 = 1, V7_8 = 1, V7_2 = 1, V8_9 = 1, V8_6 = 1, V8_4 = 1, V8_5 = 1, V8_1 = 1, V8_3 = 1, V8_7 = 0, V8_8 = 1, V8_2 = 1, V9_9 = 1, V9_6 = 0, V9_4 = 1, V9_5 = 1, V9_1 = 1, V9_3 = 1, V9_7 = 1, V9_8 = 1, V9_2 = 1, V10_9 = 0, V10_6 = 1, V10_4 = 1, V10_5 = 1, V10_1 = 1, V10_3 = 1, V10_7 = 1, V10_8 = 1, V10_2 = 1, V11_9 = 1, V11_6 = 1, V11_4 = 1, V11_5 = 0, V11_1 = 1, V11_3 = 1, V11_7 = 1, V11_8 = 1, V11_2 = 1, V12_9 = 1, V12_6 = 1, V12_4 = 1, V12_5 = 1, V12_1 = 1, V12_3 = 1, V12_7 = 1, V12_8 = 0, V12_2 = 1, V13_9 = 1, V13_6 = 1, V13_4 = 1, V13_5 = 1, V13_1 = 1, V13_3 = 0, V13_7 = 1, V13_8 = 1, V13_2 = 1, V14_9 = 1, V14_6 = 1, V14_4 = 1, V14_5 = 1, V14_1 = 1, V14_3 = 0, V14_7 = 1, V14_8 = 1, V14_2 = 1, V15_9 = 0, V15_6 = 1, V15_4 = 1, V15_5 = 1, V15_1 = 1, V15_3 = 1, V15_7 = 1, V15_8 = 1, V15_2 = 1, V16_9 = 1, V16_6 = 1, V16_4 = 1, V16_5 = 1, V16_1 = 1, V16_3 = 0, V16_7 = 1, V16_8 = 1, V16_2 = 1, V17_9 = 1, V17_6 = 1, V17_4 = 1, V17_5 = 0, V17_1 = 1, V17_3 = 1, V17_7 = 1, V17_8 = 1, V17_2 = 1, V18_9 = 0, V18_6 = 1, V18_4 = 1, V18_5 = 1, V18_1 = 1, V18_3 = 1, V18_7 = 1, V18_8 = 1, V18_2 = 1, V19_9 = 1, V19_6 = 1, V19_4 = 1, V19_5 = 1, V19_1 = 1, V19_3 = 1, V19_7 = 0, V19_8 = 1, V19_2 = 1, V20_9 = 1, V20_6 = 1, V20_4 = 1, V20_5 = 1, V20_1 = 1, V20_3 = 1, V20_7 = 1, V20_8 = 1, V20_2 = 0, V21_9 = 1, V21_6 = 1, V21_4 = 1, V21_5 = 1, V21_1 = 0, V21_3 = 1, V21_7 = 1, V21_8 = 1, V21_2 = 1, V22_9 = 1, V22_6 = 1, V22_4 = 1, V22_5 = 1, V22_1 = 1, V22_3 = 1, V22_7 = 1, V22_8 = 0, V22_2 = 1, V23_9 = 1, V23_6 = 1, V23_4 = 1, V23_5 = 0, V23_1 = 1, V23_3 = 1, V23_7 = 1, V23_8 = 1, V23_2 = 1, V24_9 = 1, V24_6 = 1, V24_4 = 0, V24_5 = 1, V24_1 = 1, V24_3 = 1, V24_7 = 1, V24_8 = 1, V24_2 = 1, V25_9 = 1, V25_6 = 1, V25_4 = 1, V25_5 = 1, V25_1 = 1, V25_3 = 0, V25_7 = 1, V25_8 = 1, V25_2 = 1, V26_9 = 1, V26_6 = 0, V26_4 = 1, V26_5 = 1, V26_1 = 1, V26_3 = 1, V26_7 = 1, V26_8 = 1, V26_2 = 1, V27_9 = 1, V27_6 = 1, V27_4 = 1, V27_5 = 1, V27_1 = 1, V27_3 = 0, V27_7 = 1, V27_8 = 1, V27_2 = 1, V28_9 = 1, V28_6 = 1, V28_4 = 1, V28_5 = 1, V28_1 = 0, V28_3 = 1, V28_7 = 1, V28_8 = 1, V28_2 = 1, V29_9 = 0, V29_6 = 1, V29_4 = 1, V29_5 = 1, V29_1 = 1, V29_3 = 1, V29_7 = 1, V29_8 = 1, V29_2 = 1, V30_9 = 1, V30_6 = 1, V30_4 = 1, V30_5 = 1, V30_1 = 1, V30_3 = 1, V30_7 = 1, V30_8 = 0, V30_2 = 1, V31_9 = 1, V31_6 = 1, V31_4 = 1, V31_5 = 1, V31_1 = 1, V31_3 = 1, V31_7 = 1, V31_8 = 1, V31_2 = 0, V32_9 = 1, V32_6 = 1, V32_4 = 0, V32_5 = 1, V32_1 = 1, V32_3 = 1, V32_7 = 1, V32_8 = 1, V32_2 = 1, V33_9 = 1, V33_6 = 1, V33_4 = 1, V33_5 = 1, V33_1 = 1, V33_3 = 1, V33_7 = 0, V33_8 = 1, V33_2 = 1, V34_9 = 1, V34_6 = 1, V34_4 = 1, V34_5 = 0, V34_1 = 1, V34_3 = 1, V34_7 = 1, V34_8 = 1, V34_2 = 1, V35_9 = 1, V35_6 = 1, V35_4 = 0, V35_5 = 1, V35_1 = 1, V35_3 = 1, V35_7 = 1, V35_8 = 1, V35_2 = 1, V36_9 = 1, V36_6 = 1, V36_4 = 1, V36_5 = 1, V36_1 = 1, V36_3 = 1, V36_7 = 0, V36_8 = 1, V36_2 = 1, V37_9 = 1, V37_6 = 0, V37_4 = 1, V37_5 = 1, V37_1 = 1, V37_3 = 1, V37_7 = 1, V37_8 = 1, V37_2 = 1, V38_9 = 1, V38_6 = 1, V38_4 = 1, V38_5 = 1, V38_1 = 1, V38_3 = 1, V38_7 = 0, V38_8 = 1, V38_2 = 1, V39_9 = 1, V39_6 = 1, V39_4 = 1, V39_5 = 1, V39_1 = 1, V39_3 = 1, V39_7 = 1, V39_8 = 1, V39_2 = 0, V40_9 = 1, V40_6 = 1, V40_4 = 1, V40_5 = 0, V40_1 = 1, V40_3 = 1, V40_7 = 1, V40_8 = 1, V40_2 = 1 
+
+Restricao 1 e 2 nao apresentada para deixar arquivos menores. 
+ Podem ser consultadas durante execucao do codigo. 
+ 
+
+************* RESULTADOS OBTIDOS *************
+Status do processamento do GUROBI: OPTIMAL
+SOLUCAO ENCONTRADA PARA O PROBLEMA - SEQUENCIA DE CORES:
+ V1 tem a cor final 9
+V2 tem a cor final 6
+V3 tem a cor final 4
+V4 tem a cor final 5
+V5 tem a cor final 5
+V6 tem a cor final 5
+V7 tem a cor final 5
+V8 tem a cor final 5
+V9 tem a cor final 5
+V10 tem a cor final 5
+V11 tem a cor final 5
+V12 tem a cor final 8
+V13 tem a cor final 3
+V14 tem a cor final 3
+V15 tem a cor final 3
+V16 tem a cor final 3
+V17 tem a cor final 3
+V18 tem a cor final 3
+V19 tem a cor final 3
+V20 tem a cor final 3
+V21 tem a cor final 3
+V22 tem a cor final 3
+V23 tem a cor final 3
+V24 tem a cor final 3
+V25 tem a cor final 3
+V26 tem a cor final 3
+V27 tem a cor final 3
+V28 tem a cor final 1
+V29 tem a cor final 1
+V30 tem a cor final 2
+V31 tem a cor final 2
+V32 tem a cor final 2
+V33 tem a cor final 7
+V34 tem a cor final 7
+V35 tem a cor final 7
+V36 tem a cor final 7
+V37 tem a cor final 7
+V38 tem a cor final 7
+V39 tem a cor final 7
+V40 tem a cor final 7 
+
+RESULTADOS COMPLETOS ENCONTRADOS PELO GUROBI - RELACIONADO A FUNÇÃO OBJETIVO:
+ 1 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 1 0 0 
+
+************* DADOS SOBRE O PROCESSAMENTO *************
+Tempo, em segundos, decorrido desde a leitura dos dados: 16.058
+Quantidade de instancias (itercount): 11212 
+
+******** OUTPUT GERADO AUTOMATICAMENTE PELO GUROBI *********
+
+Gurobi Optimizer version 9.0.3 build v9.0.3rc0 (win64)
+Optimize a model with 88960 rows, 360 columns and 267120 nonzeros
+Model fingerprint: 0x38f72f30
+Variable types: 0 continuous, 360 integer (360 binary)
+Coefficient statistics:
+  Matrix range     [1e+00, 1e+00]
+  Objective range  [1e+00, 1e+00]
+  Bounds range     [0e+00, 0e+00]
+  RHS range        [1e+00, 1e+00]
+Found heuristic solution: objective 36.0000000
+Presolve time: 0.25s
+Presolved: 88960 rows, 360 columns, 267120 nonzeros
+Variable types: 0 continuous, 360 integer (360 binary)
+
+Root relaxation: objective 1.825000e+01, 6818 iterations, 0.31 seconds
+
+    Nodes    |    Current Node    |     Objective Bounds      |     Work
+ Expl Unexpl |  Obj  Depth IntInf | Incumbent    BestBd   Gap | It/Node Time
+
+     0     0   18.25000    0   81   36.00000   18.25000  49.3%     -    0s
+H    0     0                      25.0000000   18.25000  27.0%     -    0s
+     0     0   19.71154    0  122   25.00000   19.71154  21.2%     -    2s
+     0     0   19.71154    0  121   25.00000   19.71154  21.2%     -    3s
+     0     0   20.95817    0  134   25.00000   20.95817  16.2%     -    4s
+H    0     0                      24.0000000   20.95817  12.7%     -    4s
+     0     0   21.05197    0  145   24.00000   21.05197  12.3%     -    4s
+     0     0   21.05391    0  149   24.00000   21.05391  12.3%     -    5s
+     0     0   21.06711    0  148   24.00000   21.06711  12.2%     -    5s
+     0     0   21.07089    0  148   24.00000   21.07089  12.2%     -    5s
+     0     0   21.07151    0  150   24.00000   21.07151  12.2%     -    5s
+     0     0   21.07160    0  150   24.00000   21.07160  12.2%     -    5s
+     0     0   21.84311    0  141   24.00000   21.84311  8.99%     -    6s
+     0     0   22.04552    0  153   24.00000   22.04552  8.14%     -    7s
+     0     0   22.10729    0  151   24.00000   22.10729  7.89%     -    7s
+     0     0   22.12024    0  155   24.00000   22.12024  7.83%     -    7s
+     0     0   22.12299    0  166   24.00000   22.12299  7.82%     -    7s
+     0     0   22.12432    0  158   24.00000   22.12432  7.82%     -    7s
+     0     0   22.12492    0  165   24.00000   22.12492  7.81%     -    8s
+     0     0   22.12496    0  160   24.00000   22.12496  7.81%     -    8s
+     0     0   22.44275    0  153   24.00000   22.44275  6.49%     -    9s
+     0     0   22.51428    0  146   24.00000   22.51428  6.19%     -    9s
+     0     0   22.53813    0  151   24.00000   22.53813  6.09%     -    9s
+     0     0   22.54271    0  155   24.00000   22.54271  6.07%     -    9s
+     0     0   22.55011    0  158   24.00000   22.55011  6.04%     -   10s
+     0     0   22.55216    0  154   24.00000   22.55216  6.03%     -   10s
+     0     0   22.55217    0  157   24.00000   22.55217  6.03%     -   10s
+     0     0   22.60388    0  150   24.00000   22.60388  5.82%     -   11s
+     0     0   22.61741    0  156   24.00000   22.61741  5.76%     -   11s
+     0     0   22.62641    0  156   24.00000   22.62641  5.72%     -   11s
+     0     0   22.62694    0  154   24.00000   22.62694  5.72%     -   11s
+     0     0   22.62794    0  155   24.00000   22.62794  5.72%     -   11s
+     0     0   22.62823    0  158   24.00000   22.62823  5.72%     -   11s
+     0     0   22.63789    0  158   24.00000   22.63789  5.68%     -   12s
+     0     0   22.64279    0  166   24.00000   22.64279  5.66%     -   12s
+     0     0   22.64380    0  168   24.00000   22.64380  5.65%     -   12s
+     0     0   22.64645    0  168   24.00000   22.64645  5.64%     -   12s
+     0     0   22.64663    0  170   24.00000   22.64663  5.64%     -   13s
+     0     0   22.69683    0  156   24.00000   22.69683  5.43%     -   13s
+H    0     0                      23.0000000   22.69683  1.32%     -   13s
+     0     0   22.69683    0  156   23.00000   22.69683  1.32%     -   13s
+
+Cutting planes:
+  Gomory: 7
+  Clique: 1
+  MIR: 41
+  Zero half: 47
+  RLT: 24
+  BQP: 18
+
+Explored 1 nodes (11212 simplex iterations) in 13.89 seconds
+Thread count was 4 (of 4 available processors)
+
+Solution count 4: 23 24 25 36 
+
+Optimal solution found (tolerance 1.00e-04)
+Best objective 2.300000000000e+01, best bound 2.300000000000e+01, gap 0.0000%

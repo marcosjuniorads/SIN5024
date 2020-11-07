@@ -1,0 +1,93 @@
+Iniciando o processamento do arquivo: rand_20_9.txt 
+
+************* LENDO OS DADOS DE ENTRADA *************
+Numero de vertices declarados no cabecalho:  20
+Numero de cores declarados no cabecalho: 9
+Numero de cores distintas REALMENTE existentes: 9
+Cores dos vertices:  1 6 7 8 1 5 1 9 2 6 1 4 3 1 8 5 1 4 1 2 
+
+************* GERANDO DADOS PARA O GUROBI *************
+Funcao objetivo: 
+ Onde: Vn = Numero do vertice e '_n' = numero da cor
+
+ V1_1 = 0, V1_6 = 1, V1_7 = 1, V1_8 = 1, V1_5 = 1, V1_9 = 1, V1_2 = 1, V1_4 = 1, V1_3 = 1, V2_1 = 1, V2_6 = 0, V2_7 = 1, V2_8 = 1, V2_5 = 1, V2_9 = 1, V2_2 = 1, V2_4 = 1, V2_3 = 1, V3_1 = 1, V3_6 = 1, V3_7 = 0, V3_8 = 1, V3_5 = 1, V3_9 = 1, V3_2 = 1, V3_4 = 1, V3_3 = 1, V4_1 = 1, V4_6 = 1, V4_7 = 1, V4_8 = 0, V4_5 = 1, V4_9 = 1, V4_2 = 1, V4_4 = 1, V4_3 = 1, V5_1 = 0, V5_6 = 1, V5_7 = 1, V5_8 = 1, V5_5 = 1, V5_9 = 1, V5_2 = 1, V5_4 = 1, V5_3 = 1, V6_1 = 1, V6_6 = 1, V6_7 = 1, V6_8 = 1, V6_5 = 0, V6_9 = 1, V6_2 = 1, V6_4 = 1, V6_3 = 1, V7_1 = 0, V7_6 = 1, V7_7 = 1, V7_8 = 1, V7_5 = 1, V7_9 = 1, V7_2 = 1, V7_4 = 1, V7_3 = 1, V8_1 = 1, V8_6 = 1, V8_7 = 1, V8_8 = 1, V8_5 = 1, V8_9 = 0, V8_2 = 1, V8_4 = 1, V8_3 = 1, V9_1 = 1, V9_6 = 1, V9_7 = 1, V9_8 = 1, V9_5 = 1, V9_9 = 1, V9_2 = 0, V9_4 = 1, V9_3 = 1, V10_1 = 1, V10_6 = 0, V10_7 = 1, V10_8 = 1, V10_5 = 1, V10_9 = 1, V10_2 = 1, V10_4 = 1, V10_3 = 1, V11_1 = 0, V11_6 = 1, V11_7 = 1, V11_8 = 1, V11_5 = 1, V11_9 = 1, V11_2 = 1, V11_4 = 1, V11_3 = 1, V12_1 = 1, V12_6 = 1, V12_7 = 1, V12_8 = 1, V12_5 = 1, V12_9 = 1, V12_2 = 1, V12_4 = 0, V12_3 = 1, V13_1 = 1, V13_6 = 1, V13_7 = 1, V13_8 = 1, V13_5 = 1, V13_9 = 1, V13_2 = 1, V13_4 = 1, V13_3 = 0, V14_1 = 0, V14_6 = 1, V14_7 = 1, V14_8 = 1, V14_5 = 1, V14_9 = 1, V14_2 = 1, V14_4 = 1, V14_3 = 1, V15_1 = 1, V15_6 = 1, V15_7 = 1, V15_8 = 0, V15_5 = 1, V15_9 = 1, V15_2 = 1, V15_4 = 1, V15_3 = 1, V16_1 = 1, V16_6 = 1, V16_7 = 1, V16_8 = 1, V16_5 = 0, V16_9 = 1, V16_2 = 1, V16_4 = 1, V16_3 = 1, V17_1 = 0, V17_6 = 1, V17_7 = 1, V17_8 = 1, V17_5 = 1, V17_9 = 1, V17_2 = 1, V17_4 = 1, V17_3 = 1, V18_1 = 1, V18_6 = 1, V18_7 = 1, V18_8 = 1, V18_5 = 1, V18_9 = 1, V18_2 = 1, V18_4 = 0, V18_3 = 1, V19_1 = 0, V19_6 = 1, V19_7 = 1, V19_8 = 1, V19_5 = 1, V19_9 = 1, V19_2 = 1, V19_4 = 1, V19_3 = 1, V20_1 = 1, V20_6 = 1, V20_7 = 1, V20_8 = 1, V20_5 = 1, V20_9 = 1, V20_2 = 0, V20_4 = 1, V20_3 = 1 
+
+Restricao 1 e 2 nao apresentada para deixar arquivos menores. 
+ Podem ser consultadas durante execucao do codigo. 
+ 
+
+************* RESULTADOS OBTIDOS *************
+Status do processamento do GUROBI: OPTIMAL
+SOLUCAO ENCONTRADA PARA O PROBLEMA - SEQUENCIA DE CORES:
+ V1 tem a cor final 6
+V2 tem a cor final 6
+V3 tem a cor final 7
+V4 tem a cor final 8
+V5 tem a cor final 8
+V6 tem a cor final 5
+V7 tem a cor final 9
+V8 tem a cor final 9
+V9 tem a cor final 9
+V10 tem a cor final 9
+V11 tem a cor final 9
+V12 tem a cor final 4
+V13 tem a cor final 3
+V14 tem a cor final 1
+V15 tem a cor final 1
+V16 tem a cor final 1
+V17 tem a cor final 1
+V18 tem a cor final 1
+V19 tem a cor final 1
+V20 tem a cor final 2 
+
+RESULTADOS COMPLETOS ENCONTRADOS PELO GUROBI - RELACIONADO A FUNÇÃO OBJETIVO:
+ 0 1 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 1 1 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0 
+
+************* DADOS SOBRE O PROCESSAMENTO *************
+Tempo, em segundos, decorrido desde a leitura dos dados: 2.862
+Quantidade de instancias (itercount): 432 
+
+******** OUTPUT GERADO AUTOMATICAMENTE PELO GUROBI *********
+
+Gurobi Optimizer version 9.0.3 build v9.0.3rc0 (win64)
+Optimize a model with 10280 rows, 180 columns and 30960 nonzeros
+Model fingerprint: 0x7f8534d9
+Variable types: 0 continuous, 180 integer (180 binary)
+Coefficient statistics:
+  Matrix range     [1e+00, 1e+00]
+  Objective range  [1e+00, 1e+00]
+  Bounds range     [0e+00, 0e+00]
+  RHS range        [1e+00, 1e+00]
+Found heuristic solution: objective 18.0000000
+Presolve time: 0.05s
+Presolved: 10280 rows, 180 columns, 30960 nonzeros
+Variable types: 0 continuous, 180 integer (180 binary)
+
+Root relaxation: objective 8.250000e+00, 200 iterations, 0.02 seconds
+
+    Nodes    |    Current Node    |     Objective Bounds      |     Work
+ Expl Unexpl |  Obj  Depth IntInf | Incumbent    BestBd   Gap | It/Node Time
+
+     0     0    8.25000    0   32   18.00000    8.25000  54.2%     -    0s
+H    0     0                      10.0000000    8.25000  17.5%     -    0s
+     0     0    9.00000    0   30   10.00000    9.00000  10.0%     -    0s
+     0     0    9.00000    0   30   10.00000    9.00000  10.0%     -    0s
+     0     0    9.00000    0   41   10.00000    9.00000  10.0%     -    0s
+     0     0    9.00000    0   41   10.00000    9.00000  10.0%     -    0s
+H    0     0                       9.0000000    9.00000  0.00%     -    0s
+     0     0    9.00000    0   40    9.00000    9.00000  0.00%     -    0s
+
+Cutting planes:
+  Gomory: 1
+  Clique: 4
+  Zero half: 16
+  RLT: 10
+  BQP: 3
+
+Explored 1 nodes (432 simplex iterations) in 0.35 seconds
+Thread count was 4 (of 4 available processors)
+
+Solution count 3: 9 10 18 
+
+Optimal solution found (tolerance 1.00e-04)
+Best objective 9.000000000000e+00, best bound 9.000000000000e+00, gap 0.0000%
