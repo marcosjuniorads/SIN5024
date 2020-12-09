@@ -1,5 +1,7 @@
-# retorna o índice do item com o maior valor
-argmax <- function(array) {
+options(scipen=999)
+
+# retorna o índice do vetor com o maior valor.
+get_index_max_value <- function(array) {
   index <- 1
   aux   <- array[1:1]
 
@@ -9,26 +11,28 @@ argmax <- function(array) {
       index <- i
     }
   }
-  return(index)
+  return(as.integer(index))
 }
 
-# retorna a versao positiva do numero
-getPositivo <- function(value) {
+# Retorna a versao positiva de um número.
+# Se -1, retorna 1. Se 1, retorna 1.
+get_positive_number <- function(value) {
   return(ifelse(value < 0, value * -1, value))
 }
 
-# maior valor na comparacao (os dois sao comparados como positivos)
-maxCompare <- function(val1, val2) {
-  val1 <- getPositivo(val1)
-  val2 <- getPositivo(val2)
+# retorna o maior valor na comparação entre dois números.
+get_maximum_number <- function(val1, val2) {
+  
+  # apenas garantindo que não haverá valores nulos na entrada
+  val1 <- get_positive_number(val1)
+  val2 <- get_positive_number(val2)
 
   return(ifelse(val1 > val2, val1, val2))
 }
 
-# maior valor em um array
-maxArray <- function(array) {
+# retorna o maior valor em um array.
+get_maximum_number_in_array <- function(array) {
   aux <- array[1:1]
-
   for (i in 1:length(array)) {
     if(array[i:i] > aux) {
       aux <- array[i:i]
@@ -39,20 +43,14 @@ maxArray <- function(array) {
 
 monta_inequacao <- function(i, sinal, mais, menos, indexIneq) {
   if(sinal == "+" & i >= 1) {
-    j <- argmax(mais[1:(i+1)])
-
-    # criar funcao que monta a inequacao, adicionar o resultado com o indice+1
-    # no lhs da inequacao
-    indexIneq <- rbind(indexIneq, j)
+    j <- get_index_max_value(mais[1:i])
+    indexIneq[j:j] <- 1
     monta_inequacao(j - 1, "-", mais, menos, indexIneq)
   } else if(i >= 2) {
-    j <- argmax(menos[1:i+1])
+    j <- get_index_max_value(menos[2:i])
 
-    # adiciona 1 pq ja começou contando do 1 e nao do zero
     if(menos[(j + 1):(j + 1)] > 0) {
-      # criar funcao que monta a inequacao, adiciona o resultado com o indice
-      #  -1 no lhs da inequacao
-      indexIneq <- rbind(indexIneq, (j + 1))
+      indexIneq[j:j] <- -1
       monta_inequacao(j, "+", mais, menos, indexIneq)
     }
   }
@@ -70,40 +68,43 @@ sep_ineq_convex_gen <- function(vetor_corte,
   v         <- vetor_corte
   mais      <- vetor_mais
   menos     <- vetor_menos
-  indexIneq <- vetor_inequacao
+  inequacao <- vetor_inequacao
+
+  # ponteiro do vetor mais
+  p <- NA
+
+  # ponteiro de vetor menos
+  q <- NA
 
   # inicia os vetores auxuliares mais e menos com o tamanho de V
   mais  <- rep(NA, length(v))
   menos <- rep(NA, length(v))
+  inequacao <- rep(0, length(v))
 
-  menos[1:1] <- -0
+  menos[1:1] <- -Inf
   mais[1:1]  <- v[1:1]
   mais[2:2]  <- v[2:2]
   menos[2:2] <- v[1:1] - v[2:2]
 
   # percorrendo o vetor criado.
   for (r in 2:length(v)) {
-    p <- argmax(mais[1:r])
-    q <- argmax(menos[2:r]) + 1
+    p <- get_index_max_value(mais[1:r])
+    q <- get_index_max_value(menos[1:r])
 
-    mais[(r+1):(r+1)]  <- maxCompare(val1 = v[(r+1):(r+1)],
-                                     val2 = menos[q:q] + v[(r+1):(r+1)])
-    menos[(r+1):(r+1)] <- mais[p:p] - v[(r+1):(r+1)]
+    mais[(r + 1):(r + 1)]  <- get_maximum_number(val1 = v[(r + 1):(r + 1)],
+                                                 val2 = sum(menos[q:q],
+                                                            v[(r + 1):(r + 1)]))
+    menos[(r + 1):(r + 1)] <- mais[p:p] - v[(r + 1):(r + 1)]
   }
 
   menos <- menos[!is.na(menos)]
   mais  <- mais[!is.na(mais)]
 
-  # o maior valor do vetor "mais" representa se inequacao está violada
-  if(maxArray(mais) > 1 + ε){
-    monta_inequacao(length(v) - 1,
-                    "+",
-                    mais,
-                    menos,
-                    indexIneq)
+  # inequação 'mais violada' está violada?
+  if(get_maximum_number_in_array(mais) > 1 + ε){
+    monta_inequacao(length(v), "+", mais, menos, inequacao)
   }
-
-  return(indexIneq) #o que essa função deveria retornar? esse vetor?
+  return(inequacao)
 }
 
 # chamando a função
