@@ -9,6 +9,8 @@ from gurobipy import GRB
 m = gp.Model("recoloration_convex")
 
 # Adicionando as variáveis ao modelo
+
+# model = adicionar_variaveis_modelo(m, [1,2,3], [1,2])
 v1_cor1 = m.addVar(vtype=GRB.BINARY, name="v1_cor1")
 v1_cor2 = m.addVar(vtype=GRB.BINARY, name="v1_cor2")
 v2_cor1 = m.addVar(vtype=GRB.BINARY, name="v2_cor1")

@@ -1,6 +1,6 @@
 # carregando as funções e bibliotecas necessárias
 source(paste0(getwd(), "/librarys.R"), encoding = "UTF-8")
-source(paste0(getwd(), "/convex recoloration/functions_rc.R"),
+source(paste0(getwd(), "/convex recoloration/R/functions_rc.R"),
        encoding = "UTF-8")
 
 # obtendo lista de arquivos de instâncias que serão processadas
