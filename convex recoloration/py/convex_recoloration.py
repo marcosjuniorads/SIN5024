@@ -4,12 +4,26 @@
 
 import gurobipy as gp
 from gurobipy import GRB
+from functions_model import *
+from functions_files import *
+
+# path do arquivo
+filename = '\exemplo_simples.txt'
+path = 'E:\SIN5024\convex recoloration\instancias' + filename
 
 # Criando o modelo
 m = gp.Model("recoloration_convex")
 
+# obtendo a lista de variaveis
+variables = obter_variaveis(path).to_list()
+# Adicionando as variáveis ao modelo e obtendo modelo atualizado
+m = adicionar_variaveis_modelo(model=m,
+                               lista_variaveis=variables,
+                               name="variaveis_modelo")
+
 # Adicionando as variáveis ao modelo
-# lista_variaveis = ["v1_cor1", "v1_cor2", "v2_cor1", "v2_cor2", "v3_cor1", "v3_cor2", "v4_cor1", "v4_cor2"]
+# lista_variaveis = ["v1_cor1", "v1_cor2", "v2_cor1", "v2_cor2", "v3_cor1",
+# "v3_cor2", "v4_cor1", "v4_cor2"]
 v1_cor1 = m.addVar(vtype=GRB.BINARY, name="v1_cor1")
 v1_cor2 = m.addVar(vtype=GRB.BINARY, name="v1_cor2")
 v2_cor1 = m.addVar(vtype=GRB.BINARY, name="v2_cor1")
@@ -46,7 +60,6 @@ m.addConstr(v2_cor2 - v3_cor2 + v4_cor2 <= 1, "c11")
 # Otimizando o problema
 m.optimize()
 
-
 for v in m.getObjective():
     print('%s %g' % (v.varName, v.x))
 
@@ -55,11 +68,11 @@ for v in m.getVars():
 
 print('Obj: %g' % m.objVal)
 
-teste={'v1_cor1',
-       'v1_cor2',
-       'v2_cor1',
-       'v2_cor2',
-       'v3_cor1',
-       'v3_cor2',
-       'v4_cor1',
-       'v4_cor2'}
+teste = {'v1_cor1',
+         'v1_cor2',
+         'v2_cor1',
+         'v2_cor2',
+         'v3_cor1',
+         'v3_cor2',
+         'v4_cor1',
+         'v4_cor2'}
