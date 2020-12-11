@@ -73,17 +73,17 @@ def obter_variaveis(path):
 
     # encontrando a combinaçãoe entre todos os elementos de vertices e cores
     # possíveis, sem quaisquer repetições.
-    vertice_cor = [list(zip(vertices, p)) for p in permutations(cores)]
-    vertice_cor = list(itertools.chain(*vertice_cor))
+    vertice_cor = list([x + y for x in vertices for y in cores])
 
     # convertendo para um dataframe para facilitar a manipulação e ordenando
     # pelo numero do vertice, para facilitar posterior validação.
-    vertice_cor = pd.DataFrame(vertice_cor, columns=['vertice', 'cor'])
-    vertice_cor = vertice_cor.sort_values(by=['vertice', 'cor'])
+    vertice_cor = pd.DataFrame(vertice_cor, columns=['vertice_cor'])
+    vertice_cor['vertice'] = vertice_cor['vertice_cor'].map(lambda x: x[0:1])
+    vertice_cor['cor'] = vertice_cor['vertice_cor'].map(lambda x: x[1:2])
 
     # criando uma nova coluna para armazenar o nome da variável a ser utilizada
-    vertice_cor['variavel'] = 'vertice_' +\
+    vertice_cor['variavel'] = 'vertice' +\
                               vertice_cor["vertice"] +\
-                              '_cor_' + vertice_cor["cor"]
+                              '_cor' + vertice_cor["cor"]
 
     return vertice_cor['variavel']

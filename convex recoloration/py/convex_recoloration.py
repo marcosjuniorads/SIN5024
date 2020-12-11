@@ -15,27 +15,27 @@ path = 'E:\SIN5024\convex recoloration\instancias' + filename
 m = gp.Model("recoloration_convex")
 
 # obtendo a lista de variaveis
-variables = obter_variaveis(path).to_list()
+lista_variaveis = obter_variaveis(path)
 # Adicionando as variáveis ao modelo e obtendo modelo atualizado
-m = adicionar_variaveis_modelo(model=m,
-                               lista_variaveis=variables,
-                               name="variaveis_modelo")
+variables = adicionar_variaveis_modelo(model=m,
+                                       lista_variaveis=lista_variaveis,
+                                       name="variaveis_modelo")
 
 # Adicionando as variáveis ao modelo
 # lista_variaveis = ["v1_cor1", "v1_cor2", "v2_cor1", "v2_cor2", "v3_cor1",
 # "v3_cor2", "v4_cor1", "v4_cor2"]
-v1_cor1 = m.addVar(vtype=GRB.BINARY, name="v1_cor1")
-v1_cor2 = m.addVar(vtype=GRB.BINARY, name="v1_cor2")
-v2_cor1 = m.addVar(vtype=GRB.BINARY, name="v2_cor1")
-v2_cor2 = m.addVar(vtype=GRB.BINARY, name="v2_cor2")
-v3_cor1 = m.addVar(vtype=GRB.BINARY, name="v3_cor1")
-v3_cor2 = m.addVar(vtype=GRB.BINARY, name="v3_cor2")
-v4_cor1 = m.addVar(vtype=GRB.BINARY, name="v4_cor1")
-v4_cor2 = m.addVar(vtype=GRB.BINARY, name="v4_cor2")
+# v1_cor1 = m.addVar(vtype=GRB.BINARY, name="v1_cor1")
+# v1_cor2 = m.addVar(vtype=GRB.BINARY, name="v1_cor2")
+# v2_cor1 = m.addVar(vtype=GRB.BINARY, name="v2_cor1")
+# v2_cor2 = m.addVar(vtype=GRB.BINARY, name="v2_cor2")
+# v3_cor1 = m.addVar(vtype=GRB.BINARY, name="v3_cor1")
+# v3_cor2 = m.addVar(vtype=GRB.BINARY, name="v3_cor2")
+# v4_cor1 = m.addVar(vtype=GRB.BINARY, name="v4_cor1")
+# v4_cor2 = m.addVar(vtype=GRB.BINARY, name="v4_cor2")
 
 # Criando a funcao objetivo, que no caso busca minimizar os custos
-# lista_coeficientes = [1, 1, 1, 1, 1, 1, 1, 1]
-m.setObjective(v1_cor2 + v2_cor1 + v3_cor1 + v4_cor2, GRB.MINIMIZE)
+# m.setObjective(v1_cor2 + v2_cor1 + v3_cor1 + v4_cor2, GRB.MINIMIZE)
+m = criar_funcao_objetivo(m, lista_variaveis)
 
 # PRIMEIRA RESTRIÇÃO > garantindo que todos os vértices sejam pintados
 # lista_variaveis = [1, 1, 1, 1, 1, 1, 1, 1]
