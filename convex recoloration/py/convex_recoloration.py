@@ -9,8 +9,7 @@ from gurobipy import GRB
 m = gp.Model("recoloration_convex")
 
 # Adicionando as variáveis ao modelo
-
-# model = adicionar_variaveis_modelo(m, [1,2,3], [1,2])
+# lista_variaveis = ["v1_cor1", "v1_cor2", "v2_cor1", "v2_cor2", "v3_cor1", "v3_cor2", "v4_cor1", "v4_cor2"]
 v1_cor1 = m.addVar(vtype=GRB.BINARY, name="v1_cor1")
 v1_cor2 = m.addVar(vtype=GRB.BINARY, name="v1_cor2")
 v2_cor1 = m.addVar(vtype=GRB.BINARY, name="v2_cor1")
@@ -21,9 +20,12 @@ v4_cor1 = m.addVar(vtype=GRB.BINARY, name="v4_cor1")
 v4_cor2 = m.addVar(vtype=GRB.BINARY, name="v4_cor2")
 
 # Criando a funcao objetivo, que no caso busca minimizar os custos
+# lista_coeficientes = [1, 1, 1, 1, 1, 1, 1, 1]
 m.setObjective(v1_cor2 + v2_cor1 + v3_cor1 + v4_cor2, GRB.MINIMIZE)
 
 # PRIMEIRA RESTRIÇÃO > garantindo que todos os vértices sejam pintados
+# lista_variaveis = [1, 1, 1, 1, 1, 1, 1, 1]
+# lista_coeficientes = [1, 1, 1, 1, 1, 1, 1, 1]
 m.addConstr(v1_cor1 + v1_cor2 == 1, "c0")
 m.addConstr(v2_cor1 + v2_cor2 == 1, "c1")
 m.addConstr(v3_cor1 + v3_cor2 == 1, "c2")
@@ -44,8 +46,20 @@ m.addConstr(v2_cor2 - v3_cor2 + v4_cor2 <= 1, "c11")
 # Otimizando o problema
 m.optimize()
 
+
+for v in m.getObjective():
+    print('%s %g' % (v.varName, v.x))
+
 for v in m.getVars():
     print('%s %g' % (v.varName, v.x))
 
 print('Obj: %g' % m.objVal)
 
+teste={'v1_cor1',
+       'v1_cor2',
+       'v2_cor1',
+       'v2_cor2',
+       'v3_cor1',
+       'v3_cor2',
+       'v4_cor1',
+       'v4_cor2'}
