@@ -41,5 +41,9 @@ m.addConstr(v2_cor2 - v3_cor2 + v4_cor2 <= 1, "c11")
 # Otimizando o problema
 m.optimize()
 
+# Resolvendo o problema de modo relaxado
+relaxed = m.relax()
+relaxed.optimize()
+
 for v in m.getVars():
     print('%s %g' % (v.varName, v.x))

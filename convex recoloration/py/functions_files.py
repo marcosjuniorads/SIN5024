@@ -1,7 +1,7 @@
 import pandas as pd
+import numpy as np
 import itertools
 from itertools import combinations as comb
-from itertools import permutations
 
 
 def obter_numero_vertices(path):
@@ -15,14 +15,11 @@ def obter_numero_cores(path):
 
 
 def obter_lista_vertices_cor(path):
-    df = pd.read_csv(path,  header=None, names=['cores'])
-    df['ver'] = df.index.values
-    df['variaveis'] = 'vertice_' + df["ver"].astype(str) + '_cor_' + df["cores"]
+    df = pd.read_csv(path,  header=None, names=['cor_atual'])
+    df['vertice'] = df.index.values
     # removendo a primeira linha que não contém os dados da sequência.
-    df = df.iloc[1:, 2:]
-    # transformando em uma lista
-    df = df.values.tolist()
-    return list(itertools.chain(*df))
+    df = df.iloc[1:, ]
+    return df
 
 
 def obter_lista_cores(path, duplicated_values=True):
@@ -82,8 +79,22 @@ def obter_variaveis(path):
     vertice_cor['cor'] = vertice_cor['vertice_cor'].map(lambda x: x[1:2])
 
     # criando uma nova coluna para armazenar o nome da variável a ser utilizada
-    vertice_cor['variavel'] = 'vertice' +\
+    vertice_cor['nome_variavel'] = 'vertice' +\
                               vertice_cor["vertice"] +\
                               '_cor' + vertice_cor["cor"]
+    vertice_cor['vertice'] = vertice_cor['vertice'].astype(str).astype(int)
 
-    return vertice_cor['variavel']
+    # criando uma nova coluna para armazenar o coeficiente dessa variável
+    # que deverá ser utilizada para a função objetivo. Nesse caso, se a variável
+    # já está pintada da mesma cor,
+    df_cor_atual = obter_lista_vertices_cor(path)
+    vertice_cor = pd.merge(vertice_cor,
+                           df_cor_atual,
+                           how='left',
+                           on=['vertice'])
+
+    vertice_cor['coeff'] = np.where(vertice_cor['cor_atual'] ==
+                                    vertice_cor['cor'], 0, 1)
+
+    return vertice_cor.loc[:, vertice_cor.columns != 'vertice_cor']
+
