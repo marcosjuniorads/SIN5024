@@ -5,8 +5,8 @@ from functions_files import *
 import numpy as np
 
 # path do arquivo
-filename = '\exemplo_simples.txt'
-path = 'E:\SIN5024\convex recoloration\instancias' + filename
+filename = 'exemplo_simples.txt'
+path = 'E:\\SIN5024\\convex recoloration\\instancias\\' + filename
 
 # Criando o modelo
 m = gp.Model("recoloration_convex")
@@ -19,9 +19,8 @@ lista_variaveis = df['nome_variavel']
 lista_coeficientes = df['coeff']
 
 # CRIANDO AS VARIÁVEIS DO MODELO ----------------------------------------------
-variables = adicionar_variaveis_modelo(model=m,
-                                       lista_variaveis=lista_variaveis,
-                                       name="variaveis_modelo")
+variables = m.addVars(lista_variaveis, vtype=GRB.BINARY, name="modelo_var")
+
 
 # ADICIONANDO EXPRESSÃO LINEAR DA FUNÇÃO OBJETIVO -----------------------------
 linear_expression = LinExpr()

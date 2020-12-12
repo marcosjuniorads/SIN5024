@@ -55,7 +55,7 @@ def obter_lista_vertices(path):
     # apenas simplicando a estrutura de lista / lista -> lista
     df = list(itertools.chain(*df))
     # convertendo lista de inteiro para string
-    df = list(''.join(str(x) for x in df))
+    df = [str(i) for i in df]
     return df
 
 
@@ -68,15 +68,15 @@ def obter_variaveis(path):
     vertices = obter_lista_vertices(path)
     cores = obter_lista_cores(path, duplicated_values=False)
 
-    # encontrando a combinaçãoe entre todos os elementos de vertices e cores
+    # encontrando a combinação entre todos os elementos de vertices e cores
     # possíveis, sem quaisquer repetições.
-    vertice_cor = list([x + y for x in vertices for y in cores])
+    vertice_cor = list([x + ' ' + y for x in vertices for y in cores])
 
     # convertendo para um dataframe para facilitar a manipulação e ordenando
     # pelo numero do vertice, para facilitar posterior validação.
     vertice_cor = pd.DataFrame(vertice_cor, columns=['vertice_cor'])
-    vertice_cor['vertice'] = vertice_cor['vertice_cor'].map(lambda x: x[0:1])
-    vertice_cor['cor'] = vertice_cor['vertice_cor'].map(lambda x: x[1:2])
+    vertice_cor[['vertice', 'cor']] = vertice_cor['vertice_cor'].str.\
+                                      split(' ', expand=True)
 
     # criando uma nova coluna para armazenar o nome da variável a ser utilizada
     vertice_cor['nome_variavel'] = 'vertice' +\
