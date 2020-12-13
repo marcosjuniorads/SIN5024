@@ -6,12 +6,12 @@ from itertools import combinations as comb
 
 def obter_numero_vertices(path):
     df = pd.read_csv(path,  header=None, nrows=1)
-    return int(df.iloc[0].str.slice(0, 1))
+    return int(df.iloc[0].str.split(' ', 1, expand=True)[0])
 
 
 def obter_numero_cores(path):
     df = pd.read_csv(path,  header=None, nrows=1)
-    return int(df.iloc[0].str.slice(1))
+    return int(df.iloc[0].str.split(' ', 1, expand=True)[1])
 
 
 def obter_lista_vertices_cor(path):
