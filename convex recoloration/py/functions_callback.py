@@ -1,9 +1,107 @@
-# Função que retorna o indice do item com o maior valor
+import gurobipy as gp
+from gurobipy import GRB
+from functions_model import *
+from functions_files import *
+from gurobipy.gurobipy import LinExpr, quicksum
+import numpy as np
+import pandas as pd
+import itertools
+from itertools import combinations as comb
+from numpy.lib.index_tricks import index_exp
+
+# ESSE PARAMETRO DEVE SER USADO QUANDO O PROGRAMA FOR USAR LAZY CONSTRAINT, ANTES DO M.OPTIMIZE()
+m.setParam('LazyConstraints', 1, '')
+
+# PARA LAZY CONSTRAINT, DESATIVAR OS CORTES DA R2
+# PARA USERCUT, CHAMAR NORMALMENTE
+
+# CHAMADA QUANDO USAR CALLBACK
+m.optimize(callback)
+
+
+# NAO SEI SE OS IMPORTS ESTAO CORRETOS PQ NAO CONSEGUI TESTAR ASSIM,
+# ENTAO TEM QUE VER SE FUNCIONA
+
+
+def colorSeparation(model):
+    variaveis = model.getVars()
+
+    cores = len(obter_lista_cores(path, duplicated_values=False))
+    j = 0
+
+    colunasXCores = []
+    aux_colunasXCores = []
+
+    for i in range(0, cores):
+
+        j = i
+
+        while j < len(variaveis):
+            aux_colunasXCores.append(variaveis[j])
+            j = j + cores
+
+        colunasXCores.append(aux_colunasXCores)
+        aux_colunasXCores = []
+
+    return (colunasXCores)
+
+
+def colorRelaxation(colunasXCores, model):
+    arrayRetorno = []
+    aux_arrayRetorno = []
+
+    # Remover a restricao de integralidade das cores
+    for i in range(0, len(colunasXCores)):
+        for j in range(0, len(colunasXCores[i])):
+            model.getVarByName(colunasXCores[i][j].VarName).VType = 'C'
+            model.update()
+
+            aux_arrayRetorno.append(
+                model.getVarByName(colunasXCores[i][j].VarName))
+
+        arrayRetorno.append(aux_arrayRetorno)
+        aux_arrayRetorno = []
+
+    return (arrayRetorno)
+
+
+# CONSTROI AS INEQUACOES DE CORTE
+def equationBuilder(index_inequacao, v, modelVars):
+    index_inequacao.reverse()
+
+    sinal = '+'
+    expr = LinExpr()
+
+    for i in range(0, len(index_inequacao)):
+
+        if (sinal == '+'):
+            var = modelVars[index_inequacao[i]]
+
+            # adicionar variavel a expressao
+            expr.add(var, 1)
+
+            # alterar sinal
+            sinal = '-'
+
+        elif (sinal == '-'):
+            var = modelVars[index_inequacao[i]]
+
+            # adicionar variavel a expressao
+            expr.add(var, -1)
+
+            # alterar sinal
+            sinal = '+'
+
+    return (expr)
+
+
+# ALGORITMO DE SEPARACAO
+# Funcao que retorna o indice do item com o maior valor
 def argmax(array):
     return array.index(max(array))
 
 
-# Função que retorna o maior valor dentre dois números positivos
+# Funcao que retorna o maior valor dentre dois numeros positivos
 def get_maximum_number(val1, val2):
     if abs(val1) > abs(val2):
         return val1
@@ -25,7 +123,9 @@ def monta_inequacao(i, sinal, mais, menos, index_inequacao):
             monta_inequacao(j, '+', mais, menos, index_inequacao)
 
 
-def sep_ineq_convex_gen(v, e=0.01):
+def sep_ineq_convex_gen(vVars, modelVars, e=0.01):
+    v = vVars
+
     # iniciando os vetores auxiliares
     mais = []
     menos = []
@@ -54,19 +154,48 @@ def sep_ineq_convex_gen(v, e=0.01):
     if max(mais) > 1 + e:
         monta_inequacao(n - 1, '+', mais, menos, index_inequacao)
 
-    return(index_inequacao)
+        corte = equationBuilder(index_inequacao, vVars, modelVars)
+
+        return (corte)
+    else:
+
+        return ('--')
 
 
+# FUNCTIONS_CALLBACK
 def callback(model, where):
-    print("breakdown")
-
     # USERCUT
     if where == GRB.Callback.MIPNODE and model.cbGet(
             GRB.Callback.MIPNODE_STATUS) == GRB.OPTIMAL:
-        print("USERCUT DA GALERA")
-        # x = model.cbGetNodeRel(model._vars)
-        # model.cbSetSolution(model.getVars(), x)
+
+        # Selecionar variaveis que serao cortadas
+        # remover a restricao de binario
+        vArray = colorRelaxation(colorSeparation(model), model)
+
+        cortes = []
+
+        for i in range(0, len(vArray)):
+            v = model.cbGetNodeRel(vArray[i])
+
+            # chamar o algoritmo de separacao
+            retornoSeparacao = sep_ineq_convex_gen(v)
+
+            if (isinstance(retornoSeparacao, str) == False):
+                model.cbCut(retornoSeparacao, GRB.LESS_EQUAL, 1)
 
     # LAZYCONSTRAINT
     if where == GRB.Callback.MIPSOL:
-        print("LAZY CONSTRINT BOLADA")
+        # Selecionar variaveis que serao cortadas
+        # remover a restricao de binario
+        vArray = colorRelaxation(colorSeparation(model), model)
+
+        cortes = []
+
+        for i in range(0, len(vArray)):
+            v = model.cbGetSolution(vArray[i])
+
+            # chamar o algoritmo de separacao
+            retornoSeparacao = sep_ineq_convex_gen(v, vArray[i])
+
+            if (isinstance(retornoSeparacao, str) == False):
+                model.cbLazy(retornoSeparacao, GRB.LESS_EQUAL, 1)
