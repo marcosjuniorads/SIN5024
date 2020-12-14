@@ -107,7 +107,7 @@ for file in files:
 
             m.addConstr(linear_expression, "<=", 1)
 
-    # Deixei a OTIMIZAÇÂO DENTRO DA FUNÇÂO RELATÓRIO, PARA IMPRIMIR SAIDA
+    # OTIMIZANDO sem USER CUT /base
     m.optimize()
 
     gerando_relatorio_otimizacao(diretorio_resultados,

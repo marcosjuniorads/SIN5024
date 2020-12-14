@@ -3,96 +3,67 @@ from gurobipy import GRB
 from functions_model import *
 from functions_files import *
 from gurobipy.gurobipy import LinExpr, quicksum
-import numpy as np
-import pandas as pd
-import itertools
-from itertools import combinations as comb
-from numpy.lib.index_tricks import index_exp
-
-# ESSE PARAMETRO DEVE SER USADO QUANDO O PROGRAMA FOR USAR LAZY CONSTRAINT, ANTES DO M.OPTIMIZE()
-m.setParam('LazyConstraints', 1, '')
-
-# PARA LAZY CONSTRAINT, DESATIVAR OS CORTES DA R2
-# PARA USERCUT, CHAMAR NORMALMENTE
-
-# CHAMADA QUANDO USAR CALLBACK
-m.optimize(callback)
 
 
-# NAO SEI SE OS IMPORTS ESTAO CORRETOS PQ NAO CONSEGUI TESTAR ASSIM,
-# ENTAO TEM QUE VER SE FUNCIONA
-
-
-def colorSeparation(model):
+def color_separation(model):
     variaveis = model.getVars()
-
     cores = len(obter_lista_cores(path, duplicated_values=False))
     j = 0
 
-    colunasXCores = []
-    aux_colunasXCores = []
+    colunas_cores = []
+    aux_colunas_cores = []
 
     for i in range(0, cores):
-
         j = i
-
         while j < len(variaveis):
-            aux_colunasXCores.append(variaveis[j])
+            aux_colunas_cores.append(variaveis[j])
             j = j + cores
 
-        colunasXCores.append(aux_colunasXCores)
-        aux_colunasXCores = []
+        colunas_cores.append(aux_colunas_cores)
+        aux_colunas_cores = []
 
-    return (colunasXCores)
+    return colunas_cores
 
 
-def colorRelaxation(colunasXCores, model):
-    arrayRetorno = []
-    aux_arrayRetorno = []
+def color_relaxation(colunas_cores, model):
+    array_retorno = []
+    aux_array_retorno = []
 
     # Remover a restricao de integralidade das cores
-    for i in range(0, len(colunasXCores)):
-        for j in range(0, len(colunasXCores[i])):
-            model.getVarByName(colunasXCores[i][j].VarName).VType = 'C'
+    for i in range(0, len(colunas_cores)):
+        for j in range(0, len(colunas_cores[i])):
+            model.getVarByName(colunas_cores[i][j].VarName).VType = 'C'
             model.update()
 
-            aux_arrayRetorno.append(
-                model.getVarByName(colunasXCores[i][j].VarName))
+            aux_array_retorno.append(
+                model.getVarByName(colunas_cores[i][j].VarName))
 
-        arrayRetorno.append(aux_arrayRetorno)
-        aux_arrayRetorno = []
+        array_retorno.append(aux_array_retorno)
+        aux_array_retorno = []
 
-    return (arrayRetorno)
+    return array_retorno
 
 
 # CONSTROI AS INEQUACOES DE CORTE
-def equationBuilder(index_inequacao, v, modelVars):
+def equationBuilder(index_inequacao, model_vars):
     index_inequacao.reverse()
-
     sinal = '+'
     expr = LinExpr()
 
     for i in range(0, len(index_inequacao)):
-
-        if (sinal == '+'):
-            var = modelVars[index_inequacao[i]]
-
+        if sinal == '+':
+            var = model_vars[index_inequacao[i]]
             # adicionar variavel a expressao
             expr.add(var, 1)
-
             # alterar sinal
             sinal = '-'
-
-        elif (sinal == '-'):
-            var = modelVars[index_inequacao[i]]
-
+        elif sinal == '-':
+            var = model_vars[index_inequacao[i]]
             # adicionar variavel a expressao
             expr.add(var, -1)
-
             # alterar sinal
             sinal = '+'
-
-    return (expr)
+    return expr
 
 
 # ALGORITMO DE SEPARACAO
@@ -123,8 +94,8 @@ def monta_inequacao(i, sinal, mais, menos, index_inequacao):
             monta_inequacao(j, '+', mais, menos, index_inequacao)
 
 
-def sep_ineq_convex_gen(vVars, modelVars, e=0.01):
-    v = vVars
+def sep_ineq_convex_gen(v_vars, model_vars, e=0.01):
+    v = v_vars
 
     # iniciando os vetores auxiliares
     mais = []
@@ -153,13 +124,11 @@ def sep_ineq_convex_gen(vVars, modelVars, e=0.01):
 
     if max(mais) > 1 + e:
         monta_inequacao(n - 1, '+', mais, menos, index_inequacao)
+        corte = equationBuilder(index_inequacao, v_vars, model_vars)
 
-        corte = equationBuilder(index_inequacao, vVars, modelVars)
-
-        return (corte)
+        return corte
     else:
-
-        return ('--')
+        return '--'
 
 
 # FUNCTIONS_CALLBACK
@@ -170,32 +139,32 @@ def callback(model, where):
 
         # Selecionar variaveis que serao cortadas
         # remover a restricao de binario
-        vArray = colorRelaxation(colorSeparation(model), model)
+        v_array = color_relaxation(color_separation(model), model)
 
         cortes = []
 
-        for i in range(0, len(vArray)):
-            v = model.cbGetNodeRel(vArray[i])
+        for i in range(0, len(v_array)):
+            v = model.cbGetNodeRel(v_array[i])
 
             # chamar o algoritmo de separacao
-            retornoSeparacao = sep_ineq_convex_gen(v)
+            retorno_separacao = sep_ineq_convex_gen(v)
 
-            if (isinstance(retornoSeparacao, str) == False):
-                model.cbCut(retornoSeparacao, GRB.LESS_EQUAL, 1)
+            if isinstance(retorno_separacao, str) == False:
+                model.cbCut(retorno_separacao, GRB.LESS_EQUAL, 1)
 
     # LAZYCONSTRAINT
     if where == GRB.Callback.MIPSOL:
         # Selecionar variaveis que serao cortadas
         # remover a restricao de binario
-        vArray = colorRelaxation(colorSeparation(model), model)
+        v_array = color_relaxation(color_separation(model), model)
 
         cortes = []
 
-        for i in range(0, len(vArray)):
-            v = model.cbGetSolution(vArray[i])
+        for i in range(0, len(v_array)):
+            v = model.cbGetSolution(v_array[i])
 
             # chamar o algoritmo de separacao
-            retornoSeparacao = sep_ineq_convex_gen(v, vArray[i])
+            retorno_separacao = sep_ineq_convex_gen(v, v_array[i])
 
-            if (isinstance(retornoSeparacao, str) == False):
-                model.cbLazy(retornoSeparacao, GRB.LESS_EQUAL, 1)
+            if isinstance(retorno_separacao, str) == False:
+                model.cbLazy(retorno_separacao, GRB.LESS_EQUAL, 1)
