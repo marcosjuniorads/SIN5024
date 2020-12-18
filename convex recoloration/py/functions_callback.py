@@ -4,7 +4,7 @@ from functions_model import *
 from functions_files import *
 from gurobipy.gurobipy import LinExpr, quicksum
 
-#testegit123
+#testegit
 
 def color_separation(model):
     variaveis = model.getVars()
