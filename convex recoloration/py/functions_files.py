@@ -112,27 +112,37 @@ def obter_caminho_possiveis_porcor(path):
     combinacoes = list(itertools.chain(*combinacoes))
 
     # Percorrendo a lista novamente e melhorando a estrutura
-    lista_caminhos = []
+    path_dictionary = {"Nome": [], "Cor": [], "Nome_caminho": [],
+                       "Vertices_caminho": []}
+    n = 0
+
     for item in combinacoes:
         vertice_inicio = int(item[0][0:1])
         vertice_fim = int(item[1][0:1])
         cor = int(item[1][1:2])
+        n += 1
+        nome = 'caminho' + str(n) + '_cor' + str(cor)
 
         if vertice_inicio + 1 == vertice_fim:
-            lista_caminhos.append(['vertice' + str(vertice_inicio) +
-                                   '_cor' + str(cor),
-                                   'vertice' + str(vertice_fim) +
-                                   '_cor' + str(cor)])
-        else:
-            lista_caminhos.append(['vertice' + str(k) + '_cor' + str(cor)
-                                   for k in list(range(vertice_inicio,
-                                                       vertice_fim + 1, 1))])
+            path = ['vertice' + str(vertice_inicio) + '_cor' + str(cor),
+                    'vertice' + str(vertice_fim) + '_cor' + str(cor)]
+            vert = [vertice_inicio, vertice_fim]
 
-    # Criando um dicionario de caminhos e retornando
-    path_dictionary = {}
-    n = 1
-    for item in lista_caminhos:
-        path_dictionary['caminho_' + str(n)] = item[:]
-        n += 1
+            # adicionando os dados do problema ao dicionário
+            path_dictionary["Nome"].append(nome)
+            path_dictionary["Cor"].append(cor)
+            path_dictionary["Nome_caminho"].append(path)
+            path_dictionary["Vertices_caminho"].append(vert)
+        else:
+            # dado um intervalo, cria uma sequência de números de x -> Y
+            # incrementando sempre 1
+            vert = [k for k in list(range(vertice_inicio, vertice_fim + 1, 1))]
+            path = ['vertice' + str(k) + '_cor' + str(cor) for k in vert]
+
+            # adicionando os dados do problema ao dicionário
+            path_dictionary["Nome"].append(nome)
+            path_dictionary["Cor"].append(cor)
+            path_dictionary["Nome_caminho"].append(path)
+            path_dictionary["Vertices_caminho"].append(vert)
 
     return path_dictionary
