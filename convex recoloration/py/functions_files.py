@@ -128,4 +128,11 @@ def obter_caminho_possiveis_porcor(path):
                                    for k in list(range(vertice_inicio,
                                                        vertice_fim + 1, 1))])
 
-    return lista_caminhos
+    # Criando um dicionario de caminhos e retornando
+    path_dictionary = {}
+    n = 1
+    for item in lista_caminhos:
+        path_dictionary['caminho_' + str(n)] = item[:]
+        n += 1
+
+    return path_dictionary
