@@ -1,14 +1,8 @@
 from functions_files import *
 import os
 
-# path do arquivo
-diretorio = str('C:\\Users\\Matheus Ancelmo\\Documents\\Mestrado\\instancias\\')
-
-# obtendo a lista de arquivos
-files = os.listdir(diretorio)
-
-for file in files:
-    # Atualizando o caminho do código
+def getInput(diretorio, file):
+    # Atualizando o caminho do codigo
     path = diretorio + file
 
     # obtendo dados dos arquivos
@@ -19,6 +13,40 @@ for file in files:
     lista_variaveis = df['nome_variavel']
     lista_coeficientes = df['coeff']
     
-    print(path)
-    print(lista_variaveis)
-    print(lista_coeficientes)
+    modelDict = {}
+    
+    for i in range(0, len(lista_variaveis)):
+        modelDict[lista_variaveis[i]] = lista_coeficientes[i]
+        
+    return modelDict
+
+
+def solve(input):
+    
+    print("parei aqui")
+
+
+def main():
+    # path do arquivo
+    diretorio = str('C:\\Users\\Matheus Ancelmo\\Documents\\Mestrado\\instancias\\')
+    
+    # obtendo a lista de arquivos
+    files = os.listdir(diretorio)
+    
+    for file in files:
+        
+        input = getInput(diretorio, file)
+        solve(input)    
+    
+main()
+
+    
+        
+    
+    
+#     if path == 'C:\\Users\\Matheus Ancelmo\\Documents\\Mestrado\\instancias\\rand_10_2.txt':
+#         print(path)
+#         print(lista_variaveis)
+#         print(lista_coeficientes)
+    
+    
