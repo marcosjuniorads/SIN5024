@@ -112,7 +112,7 @@ def obter_caminho_possiveis_porcor(path):
     combinacoes = list(itertools.chain(*combinacoes))
 
     # Percorrendo a lista novamente e melhorando a estrutura
-    path_dictionary = {"Nome": [], "Cor": [], "Nome_caminho": [],
+    path_dictionary = {"Nome": [], "Cor": [], "Nome_vertices": [],
                        "Vertices_caminho": []}
     n = 0
 
@@ -131,7 +131,7 @@ def obter_caminho_possiveis_porcor(path):
             # adicionando os dados do problema ao dicionário
             path_dictionary["Nome"].append(nome)
             path_dictionary["Cor"].append(cor)
-            path_dictionary["Nome_caminho"].append(path)
+            path_dictionary["Nome_vertices"].append(path)
             path_dictionary["Vertices_caminho"].append(vert)
         else:
             # dado um intervalo, cria uma sequência de números de x -> Y
@@ -142,7 +142,25 @@ def obter_caminho_possiveis_porcor(path):
             # adicionando os dados do problema ao dicionário
             path_dictionary["Nome"].append(nome)
             path_dictionary["Cor"].append(cor)
-            path_dictionary["Nome_caminho"].append(path)
+            path_dictionary["Nome_vertices"].append(path)
             path_dictionary["Vertices_caminho"].append(vert)
 
     return path_dictionary
+
+
+def adicionar_coeficientes_caminho(lista_cores_vertices, lista_caminhos):
+    # Criando uma nova chave para armazenar os coeficientes
+    lista_caminhos["coeficientes"] = []
+
+    # os coeficientes refletiram a quantidade de trocas necessárias,
+    # possivelmente, para o caminho assumir a cor de referência.
+    for item in list(range(0, len(lista_caminhos["Vertices_caminho"]))):
+        cor = str(lista_caminhos['Cor'][item])
+        coef = 0
+        for vertice_caminho in list(range(0, len(lista_caminhos[
+                                                     "Vertices_caminho"][item]))):
+            if lista_cores_vertices[vertice_caminho] == cor:
+                coef = coef + 1
+        lista_caminhos['coeficientes'].append(coef)
+
+    return(lista_caminhos)
