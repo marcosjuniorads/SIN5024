@@ -47,9 +47,9 @@ for file in files:
         # cor. Nesse caso, itero por cada vertice X de cor 'qualquer', para
         # posteriomente somar todos quando construo a restrição.
         lista_temp = [r[0] for r in
-                     [i.lower().split('_') for i in lista_variaveis]]
+                      [i.lower().split('_') for i in lista_variaveis]]
         indices = [n for n, l in enumerate(lista_temp) if
-                       l == ('vertice' + str(numero_vertice))]
+                   l == ('vertice' + str(numero_vertice))]
 
         # Inicializando o objeto que irá armazenar a expressão linear.
         linear_expression = LinExpr()

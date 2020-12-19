@@ -2,3 +2,5 @@
 .Rhistory
 .RData
 .Ruserdata
+.idea
+convex recoloration/py/__pycache__
