@@ -5,17 +5,17 @@ from itertools import combinations as comb
 
 
 def obter_numero_vertices(path):
-    df = pd.read_csv(path,  header=None, nrows=1)
+    df = pd.read_csv(path, header=None, nrows=1)
     return int(df.iloc[0].str.split(' ', 1, expand=True)[0])
 
 
 def obter_numero_cores(path):
-    df = pd.read_csv(path,  header=None, nrows=1)
+    df = pd.read_csv(path, header=None, nrows=1)
     return int(df.iloc[0].str.split(' ', 1, expand=True)[1])
 
 
 def obter_lista_vertices_cor(path):
-    df = pd.read_csv(path,  header=None, names=['cor_atual'])
+    df = pd.read_csv(path, header=None, names=['cor_atual'])
     df['vertice'] = df.index.values
     # removendo a primeira linha que não contém os dados da sequência.
     df = df.iloc[1:, ]
@@ -23,7 +23,7 @@ def obter_lista_vertices_cor(path):
 
 
 def obter_lista_cores(path, duplicated_values=True):
-    df = pd.read_csv(path,  header=None, names=['cores'])
+    df = pd.read_csv(path, header=None, names=['cores'])
     # removendo a primeira linha que não contém os dados da sequência.
     df = df.iloc[1:, ]
     # transformando em uma lista
@@ -45,7 +45,7 @@ def obter_lista_cores(path, duplicated_values=True):
 
 
 def obter_lista_vertices(path):
-    df = pd.read_csv(path,  header=None, names=['cores'])
+    df = pd.read_csv(path, header=None, names=['cores'])
     # removendo a primeira linha que não contém os dados da sequência.
     df['ver'] = df.index.values
     # removendo a primeira linha que não contém os dados da sequência.
@@ -75,13 +75,13 @@ def obter_variaveis(path):
     # convertendo para um dataframe para facilitar a manipulação e ordenando
     # pelo numero do vertice, para facilitar posterior validação.
     vertice_cor = pd.DataFrame(vertice_cor, columns=['vertice_cor'])
-    vertice_cor[['vertice', 'cor']] = vertice_cor['vertice_cor'].str.\
-                                      split(' ', expand=True)
+    vertice_cor[['vertice', 'cor']] = vertice_cor['vertice_cor'].str. \
+        split(' ', expand=True)
 
     # criando uma nova coluna para armazenar o nome da variável a ser utilizada
-    vertice_cor['nome_variavel'] = 'vertice' +\
-                              vertice_cor["vertice"] +\
-                              '_cor' + vertice_cor["cor"]
+    vertice_cor['nome_variavel'] = 'vertice' + \
+                                   vertice_cor["vertice"] + \
+                                   '_cor' + vertice_cor["cor"]
     vertice_cor['vertice'] = vertice_cor['vertice'].astype(str).astype(int)
 
     # criando uma nova coluna para armazenar o coeficiente dessa variável
@@ -98,3 +98,34 @@ def obter_variaveis(path):
 
     return vertice_cor.loc[:, vertice_cor.columns != 'vertice_cor']
 
+
+def obter_caminho_possiveis_porcor(path):
+    # Retornando todas as combinações possíves de caminho em um grafo
+    combinacoes = []
+    vertices = obter_lista_vertices(path)
+    cores = obter_lista_cores(path, False)
+
+    # Para cada cor, encontrando os caminhos possíveis
+    for cor in cores:
+        combinacoes.append(list(itertools.combinations([k + cor for k in
+                                                        vertices], 2)))
+    combinacoes = list(itertools.chain(*combinacoes))
+
+    # Percorrendo a lista novamente e melhorando a estrutura
+    lista_caminhos = []
+    for item in combinacoes:
+        vertice_inicio = int(item[0][0:1])
+        vertice_fim = int(item[1][0:1])
+        cor = int(item[1][1:2])
+
+        if vertice_inicio + 1 == vertice_fim:
+            lista_caminhos.append(['vertice' + str(vertice_inicio) +
+                                   '_cor' + str(cor),
+                                   'vertice' + str(vertice_fim) +
+                                   '_cor' + str(cor)])
+        else:
+            lista_caminhos.append(['vertice' + str(k) + '_cor' + str(cor)
+                                   for k in list(range(vertice_inicio,
+                                                       vertice_fim + 1, 1))])
+
+    return lista_caminhos

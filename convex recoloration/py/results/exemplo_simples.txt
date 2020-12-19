@@ -1,0 +1,79 @@
+Iniciando o processamento do arquivo: exemplo_simples.txt
+
+************* LENDO OS DADOS DE ENTRADA *************
+
+Número de vértices informados: 4
+Número de cores informadas: 2
+Número de cores REALMENTE DISTINTAS: 2
+Lista de vértices e cores:
+cor_atual  vertice
+        1        1
+        2        2
+        2        3
+        1        4
+
+
+************* DETALHES PROCESSAMENTO REALIZADO *******
+
+Gurobi Optimizer version 9.1.0 build v9.1.0rc0 (win64)
+Thread count: 2 physical cores, 4 logical processors, using up to 4 threads
+Optimize a model with 16 rows, 8 columns and 44 nonzeros
+Model fingerprint: 0x76a2eb84
+Variable types: 0 continuous, 8 integer (8 binary)
+Coefficient statistics:
+  Matrix range     [1e+00, 1e+00]
+  Objective range  [1e+00, 1e+00]
+  Bounds range     [1e+00, 1e+00]
+  RHS range        [1e+00, 1e+00]
+Presolved: 8 rows, 4 columns, 24 nonzeros
+
+Continuing optimization...
+
+
+Explored 0 nodes (0 simplex iterations) in 0.02 seconds
+Thread count was 4 (of 4 available processors)
+
+Solution count 1: 1 
+
+Optimal solution found (tolerance 1.00e-04)
+Best objective 1.000000000000e+00, best bound 1.000000000000e+00, gap 0.0000%
+None
+
+
+
+************* SOLUÇÃO ENCONTRADA APÓS EXECUÇÃO *******
+
+variables[vertice1_cor1] 1
+variables[vertice1_cor2] 0
+variables[vertice2_cor1] 0
+variables[vertice2_cor2] 1
+variables[vertice3_cor1] 0
+variables[vertice3_cor2] 1
+variables[vertice4_cor1] 0
+variables[vertice4_cor2] 1
+
+
+************* EQUAÇÕES LINEARES UTILIZADAS NO MODELO **
+
+Minimize
+   <gurobi.LinExpr: variables[vertice1_cor2] + variables[vertice2_cor1] + variables[vertice3_cor1] + variables[vertice4_cor2]>
+Subject To
+   R0 : <gurobi.LinExpr: variables[vertice1_cor1] + variables[vertice1_cor2]> = 1.0
+   R1 : <gurobi.LinExpr: variables[vertice2_cor1] + variables[vertice2_cor2]> = 1.0
+   R2 : <gurobi.LinExpr: variables[vertice3_cor1] + variables[vertice3_cor2]> = 1.0
+   R3 : <gurobi.LinExpr: variables[vertice4_cor1] + variables[vertice4_cor2]> = 1.0
+   R4 : <gurobi.LinExpr: variables[vertice1_cor1] + -1.0 variables[vertice2_cor1] + variables[vertice3_cor1]> <= 1.0
+   R5 : <gurobi.LinExpr: variables[vertice1_cor1] + -1.0 variables[vertice2_cor1] + variables[vertice4_cor1]> <= 1.0
+   R6 : <gurobi.LinExpr: variables[vertice1_cor1] + -1.0 variables[vertice3_cor1] + variables[vertice4_cor1]> <= 1.0
+   R7 : <gurobi.LinExpr: variables[vertice2_cor1] + -1.0 variables[vertice3_cor1] + variables[vertice4_cor1]> <= 1.0
+   R8 : <gurobi.LinExpr: variables[vertice1_cor1] + -1.0 variables[vertice2_cor1] + variables[vertice3_cor1]> <= 1.0
+   R9 : <gurobi.LinExpr: variables[vertice1_cor1] + -1.0 variables[vertice2_cor1] + variables[vertice4_cor1]> <= 1.0
+   R10 : <gurobi.LinExpr: variables[vertice1_cor1] + -1.0 variables[vertice3_cor1] + variables[vertice4_cor1]> <= 1.0
+   R11 : <gurobi.LinExpr: variables[vertice2_cor1] + -1.0 variables[vertice3_cor1] + variables[vertice4_cor1]> <= 1.0
+   R12 : <gurobi.LinExpr: variables[vertice1_cor2] + -1.0 variables[vertice2_cor2] + variables[vertice3_cor2]> <= 1.0
+   R13 : <gurobi.LinExpr: variables[vertice1_cor2] + -1.0 variables[vertice2_cor2] + variables[vertice4_cor2]> <= 1.0
+   R14 : <gurobi.LinExpr: variables[vertice1_cor2] + -1.0 variables[vertice3_cor2] + variables[vertice4_cor2]> <= 1.0
+   R15 : <gurobi.LinExpr: variables[vertice2_cor2] + -1.0 variables[vertice3_cor2] + variables[vertice4_cor2]> <= 1.0
+Binaries
+   ['variables[vertice1_cor1]', 'variables[vertice1_cor2]', 'variables[vertice2_cor1]', 'variables[vertice2_cor2]', 'variables[vertice3_cor1]', 'variables[vertice3_cor2]', 'variables[vertice4_cor1]', 'variables[vertice4_cor2]']
+None
