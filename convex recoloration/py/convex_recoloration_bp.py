@@ -34,17 +34,33 @@ lista_caminhos = adicionar_coeficientes_caminho(lista_cores_vertices,
 # "modelo_var")
 variables = m.addVars(lista_caminhos["Nome"], vtype=GRB.BINARY, name="var")
 
-# ADICIONANDO EXPRESSÃƒO LINEAR DA FUNÃ‡ÃƒO OBJETIVO -------------------------
+# ADICIONANDO EXPRESSÃO LINEAR DA FUNÇÃO OBJETIVO -----------------------------
 # inicializando a expressão com a primeira variável
 linear_expression = LinExpr()
 for i in range(0, len(lista_caminhos)):
     linear_expression.add(variables.values()[i],
                           lista_caminhos["coeficientes"][i])
-    m.setObjective(linear_expression, GRB.MINIMIZE)
+m.setObjective(linear_expression, GRB.MINIMIZE)
 
 
+# ADICIONANDO EXPRESSÃO LINEAR DA SEGUNDA RESTRICAO ---------------------------
+caminhos_cor1 = list(filter(lambda k: '_cor1' in k, lista_caminhos['Nome']))
+caminhos_cor2 = list(filter(lambda k: '_cor2' in k, lista_caminhos['Nome']))
 
-#depois que terminar de montar o modelo
-#chamar o metodo solve ao inves de fazer model.solve()
+for i in list(range(len(lista_caminhos['Nome']) - 1)):
+    linear_expression = LinExpr()
+    linear_expression.add(variables.values()[i], 1)
+    m.addConstr(linear_expression, "==", 1)
+
+# adicionando constraint para o respectivo value
+m.addConstr(linear_expression, "==", 1)
+
+
+# ENCONTRANDO CAMINHOS VÁLIDOS / HEURISTICA MATHEUS ---------------------------
+heuristica = encontrar_caminhos_validos(lista_caminhos, variables,
+                                        lista_cores_vertices)
+
+# Depois que terminar de montar o modelo
+# Chamar o metodo solve ao inves de fazer model.solve()
 solve(m, lista_caminhos, variables, lista_cores_vertices)
-
+# m.display()

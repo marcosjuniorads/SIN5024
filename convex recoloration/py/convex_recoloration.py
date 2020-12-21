@@ -36,7 +36,7 @@ for file in files:
     linear_expression = LinExpr()
     for i in range(1, len(lista_variaveis)):
         linear_expression.add(variables.values()[i], lista_coeficientes[i])
-        m.setObjective(linear_expression, GRB.MINIMIZE)
+    m.setObjective(linear_expression, GRB.MINIMIZE)
 
     # ADICIONANDO EXPRESSÃO LINEAR DA PRIMEIRA RESTRIÇÃO ------------------
     # Garantindo que todos os vértices sejam pintados.

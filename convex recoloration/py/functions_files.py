@@ -192,33 +192,16 @@ def check_repetido(base, comparavel, lista_caminhos):
     return retorno
 
 
-def heuristica(lista_caminhos, variables, lista_cores):
+# Pega todas as combinações de caminho e monta combinações válidas.
+# Essas devem respeitar as seguintes regras: começar sempre do primeiro vértice
+# Não repetir cor, ter sempre o tamanho do caminho original (tal como dado no
+# problema), ser convexo e não ter vértices repetidos!
+def encontrar_caminhos_validos(lista_caminhos, variables, lista_cores):
     # puxar isso dinamico depois
     TAMANHO_ARRAY_ORIGINAL = len(lista_cores)
 
     # copia_iteravel = lista_caminhos.get('Nome_vertices')
-    copia_iteravel = [['vertice1_cor1', 'vertice2_cor1'],
-                      ['vertice1_cor1', 'vertice2_cor1', 'vertice3_cor1'],
-                      ['vertice1_cor1', 'vertice2_cor1', 'vertice3_cor1',
-                       'vertice4_cor1'],
-                      ['vertice2_cor1', 'vertice3_cor1'],
-                      ['vertice2_cor1', 'vertice3_cor1', 'vertice4_cor1'],
-                      ['vertice3_cor1', 'vertice4_cor1'],
-                      ['vertice1_cor2', 'vertice2_cor2'],
-                      ['vertice1_cor2', 'vertice2_cor2', 'vertice3_cor2'],
-                      ['vertice1_cor2', 'vertice2_cor2', 'vertice3_cor2',
-                       'vertice4_cor2'],
-                      ['vertice2_cor2', 'vertice3_cor2'],
-                      ['vertice2_cor2', 'vertice3_cor2', 'vertice4_cor2'],
-                      ['vertice3_cor2', 'vertice4_cor2'],
-                      ['vertice1_cor1'],
-                      ['vertice2_cor1'],
-                      ['vertice3_cor1'],
-                      ['vertice4_cor1'],
-                      ['vertice1_cor2'],
-                      ['vertice2_cor2'],
-                      ['vertice3_cor2'],
-                      ['vertice4_cor2']]
+    copia_iteravel = lista_caminhos['Nome_vertices']
 
     caminhos_possiveis = []
     caminho = []
@@ -242,8 +225,8 @@ def heuristica(lista_caminhos, variables, lista_cores):
             for j in range(0, len(copia_iteravel)):
 
                 # verificar se nao foi adicionado ainda
-                if check_repetido(aux, copia_iteravel[j],
-                                  lista_caminhos) == False:
+                if not check_repetido(aux, copia_iteravel[j],
+                                      lista_caminhos):
 
                     # procurar um caminho que se combine com aux
                     if len(aux) + len(
@@ -271,7 +254,9 @@ def heuristica(lista_caminhos, variables, lista_cores):
 
 
 def solve(model, lista_caminhos, variables, lista_cores):
-    caminhos_possiveis = heuristica(lista_caminhos, variables, lista_cores)
+    caminhos_possiveis = encontrar_caminhos_validos(lista_caminhos,
+                                                    variables,
+                                                    lista_cores)
 
     # pra cada caminho possivel, achar uma coluna
     for i in range(0, len(caminhos_possiveis)):
