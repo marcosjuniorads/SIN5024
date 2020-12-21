@@ -109,6 +109,12 @@ def obter_caminho_possiveis_porcor(path):
     for cor in cores:
         combinacoes.append(list(itertools.combinations([k + cor for k in
                                                         vertices], 2)))
+
+    # Adicionando caminhos únicos também dentre as combinações possíveis
+    paths_unicos = [str(v) + str(c) for v in vertices for c in cores]
+    for p in paths_unicos:
+        combinacoes.append([[p, p]])
+
     combinacoes = list(itertools.chain(*combinacoes))
 
     # Percorrendo a lista novamente e melhorando a estrutura
@@ -158,9 +164,117 @@ def adicionar_coeficientes_caminho(lista_cores_vertices, lista_caminhos):
         cor = str(lista_caminhos['Cor'][item])
         coef = 0
         for vertice_caminho in list(range(0, len(lista_caminhos[
-                                                     "Vertices_caminho"][item]))):
+                                                   "Vertices_caminho"][item]))):
             if lista_cores_vertices[vertice_caminho] == cor:
                 coef = coef + 1
         lista_caminhos['coeficientes'].append(coef)
 
     return(lista_caminhos)
+
+
+def adicionar_coluna(caminho):
+    print("parei aqui")
+
+
+# Verifica se nenhum elemento do comparavel se repete na base
+def check_repetido(base, comparavel, lista_caminhos):
+    retorno = False
+
+    for i in range(0, len(base)):
+
+        aux = base[i]
+
+        for j in range(0, len(comparavel)):
+
+            if comparavel[j] in base or comparavel[j][0:8] in aux:
+                retorno = True
+
+    return retorno
+
+
+def heuristica(lista_caminhos, variables, lista_cores):
+    # puxar isso dinamico depois
+    TAMANHO_ARRAY_ORIGINAL = len(lista_cores)
+
+    # copia_iteravel = lista_caminhos.get('Nome_vertices')
+    copia_iteravel = [['vertice1_cor1', 'vertice2_cor1'],
+                      ['vertice1_cor1', 'vertice2_cor1', 'vertice3_cor1'],
+                      ['vertice1_cor1', 'vertice2_cor1', 'vertice3_cor1',
+                       'vertice4_cor1'],
+                      ['vertice2_cor1', 'vertice3_cor1'],
+                      ['vertice2_cor1', 'vertice3_cor1', 'vertice4_cor1'],
+                      ['vertice3_cor1', 'vertice4_cor1'],
+                      ['vertice1_cor2', 'vertice2_cor2'],
+                      ['vertice1_cor2', 'vertice2_cor2', 'vertice3_cor2'],
+                      ['vertice1_cor2', 'vertice2_cor2', 'vertice3_cor2',
+                       'vertice4_cor2'],
+                      ['vertice2_cor2', 'vertice3_cor2'],
+                      ['vertice2_cor2', 'vertice3_cor2', 'vertice4_cor2'],
+                      ['vertice3_cor2', 'vertice4_cor2'],
+                      ['vertice1_cor1'],
+                      ['vertice2_cor1'],
+                      ['vertice3_cor1'],
+                      ['vertice4_cor1'],
+                      ['vertice1_cor2'],
+                      ['vertice2_cor2'],
+                      ['vertice3_cor2'],
+                      ['vertice4_cor2']]
+
+    caminhos_possiveis = []
+    caminho = []
+    L = 0
+
+    v_adicionados = []
+
+    for i in range(0, len(copia_iteravel)):
+
+        aux = copia_iteravel[0]
+        caminho = []
+        caminho.append(aux)
+        acumulador_contagem = copia_iteravel[0]
+
+        # verificar se o caminho e apto a comecar uma sequencia
+        if 'vertice1' in aux[0]:
+
+            v_adicionados = v_adicionados + aux
+            copia_iteravel.pop(0)
+
+            for j in range(0, len(copia_iteravel)):
+
+                # verificar se nao foi adicionado ainda
+                if check_repetido(aux, copia_iteravel[j],
+                                  lista_caminhos) == False:
+
+                    # procurar um caminho que se combine com aux
+                    if len(aux) + len(
+                            copia_iteravel[j]) <= TAMANHO_ARRAY_ORIGINAL:
+                        caminho.append(copia_iteravel[j])
+                        acumulador_contagem = acumulador_contagem + \
+                                              copia_iteravel[j]
+
+                        if len(acumulador_contagem) == TAMANHO_ARRAY_ORIGINAL:
+                            caminhos_possiveis.append(caminho)
+                            acumulador_contagem = aux
+                            caminho = []
+                            caminho.append(aux)
+
+                    if j == len(copia_iteravel) - 1 and len(
+                            aux) == TAMANHO_ARRAY_ORIGINAL:
+                        caminhos_possiveis.append(caminho)
+                        acumulador_contagem = aux
+                        caminho = []
+                        caminho.append(aux)
+        else:
+            copia_iteravel.pop(0)
+
+    return caminhos_possiveis
+
+
+def solve(model, lista_caminhos, variables, lista_cores):
+    caminhos_possiveis = heuristica(lista_caminhos, variables, lista_cores)
+
+    # pra cada caminho possivel, achar uma coluna
+    for i in range(0, len(caminhos_possiveis)):
+        coluna = adicionar_coluna(caminhos_possiveis[i])
+
+    print("teste")
