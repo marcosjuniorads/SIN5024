@@ -44,16 +44,24 @@ m.setObjective(linear_expression, GRB.MINIMIZE)
 
 
 # ADICIONANDO EXPRESSÃO LINEAR DA SEGUNDA RESTRICAO ---------------------------
-caminhos_cor1 = list(filter(lambda k: '_cor1' in k, lista_caminhos['Nome']))
-caminhos_cor2 = list(filter(lambda k: '_cor2' in k, lista_caminhos['Nome']))
+dictionary = {}
+# Criando as variavéis no dicionario por cor, antes de popular os caminhos
+for item in obter_lista_cores(path, False):
+    dictionary['cor' + item] = []
 
-for i in list(range(len(lista_caminhos['Nome']) - 1)):
+# Preenchendo o dicionário com a lista de caminhos para cada cor
+for cor in obter_lista_cores(path, False):
+    nome_cor = '_cor' + cor
+    dictionary['cor' + cor] = list(filter(lambda k: nome_cor in k,
+                                              lista_caminhos['Nome']))
+
+# Criando a resrtrição linear que IMPEDE com que um mesmo caminho seja pintado
+# de duas ou mais cores
+for row in list(range(len(dictionary["cor1"]))):
     linear_expression = LinExpr()
-    linear_expression.add(variables.values()[i], 1)
-    m.addConstr(linear_expression, "==", 1)
-
-# adicionando constraint para o respectivo value
-m.addConstr(linear_expression, "==", 1)
+    for key in dictionary.keys():
+        linear_expression.add(variables[dictionary[key][row]], 1)
+    m.addConstr(linear_expression, "<=", 1)
 
 
 # ENCONTRANDO CAMINHOS VÁLIDOS / HEURISTICA MATHEUS ---------------------------
@@ -63,4 +71,6 @@ heuristica = encontrar_caminhos_validos(lista_caminhos, variables,
 # Depois que terminar de montar o modelo
 # Chamar o metodo solve ao inves de fazer model.solve()
 solve(m, lista_caminhos, variables, lista_cores_vertices)
+
+# m.optimize()
 # m.display()

@@ -169,7 +169,7 @@ def adicionar_coeficientes_caminho(lista_cores_vertices, lista_caminhos):
                 coef = coef + 1
         lista_caminhos['coeficientes'].append(coef)
 
-    return(lista_caminhos)
+    return lista_caminhos
 
 
 def adicionar_coluna(caminho):
