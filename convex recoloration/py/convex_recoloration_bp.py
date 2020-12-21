@@ -37,10 +37,10 @@ variables = m.addVars(lista_caminhos["Nome"], vtype=GRB.BINARY, name="var")
 # ADICIONANDO EXPRESSÃO LINEAR DA FUNÇÃO OBJETIVO -----------------------------
 # inicializando a expressão com a primeira variável
 linear_expression = LinExpr()
-for i in range(0, len(lista_caminhos)):
+for i in range(0, len(variables)):
     linear_expression.add(variables.values()[i],
                           lista_caminhos["coeficientes"][i])
-m.setObjective(linear_expression, GRB.MINIMIZE)
+    m.setObjective(linear_expression, GRB.MINIMIZE)
 
 
 # ADICIONANDO EXPRESSÃO LINEAR DA SEGUNDA RESTRICAO ---------------------------
@@ -72,5 +72,5 @@ heuristica = encontrar_caminhos_validos(lista_caminhos, variables,
 # Chamar o metodo solve ao inves de fazer model.solve()
 solve(m, lista_caminhos, variables, lista_cores_vertices)
 
-# m.optimize()
-# m.display()
+m.optimize()
+m.display()

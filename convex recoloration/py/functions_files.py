@@ -165,7 +165,8 @@ def adicionar_coeficientes_caminho(lista_cores_vertices, lista_caminhos):
         coef = 0
         for vertice_caminho in list(range(0, len(lista_caminhos[
                                                    "Vertices_caminho"][item]))):
-            if lista_cores_vertices[vertice_caminho] == cor:
+            vertice = lista_caminhos["Vertices_caminho"][item][vertice_caminho]
+            if lista_cores_vertices[vertice - 1] != cor:
                 coef = coef + 1
         lista_caminhos['coeficientes'].append(coef)
 

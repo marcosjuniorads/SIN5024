@@ -109,6 +109,7 @@ for file in files:
 
     # OTIMIZANDO sem USER CUT /base
     m.optimize()
+    m.display()
 
     gerando_relatorio_otimizacao(diretorio_resultados,
                                  file,
