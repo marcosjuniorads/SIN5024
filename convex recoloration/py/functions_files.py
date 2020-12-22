@@ -184,32 +184,21 @@ def encontrar_caminhos_com_vertice(data_dictionary, nome_vertice):
     return filtered_data.index
 
 
-def adicionar_coluna(caminho):
-    print("parei aqui")
-
-
-def unificar_caminho(model, lista_caminhos, caminhos_possiveis, variables):
+def unificar_caminho(model, caminhos_possiveis):
     caminhos = []
     novos_caminhos_gurobi = []
 
-    #separa os caminhos em arrays individuais    
+    # Separa os caminhos em arrays individuais
     for i in range(0, len(caminhos_possiveis)):
-
         aux = []
-
         for j in caminhos_possiveis[i]:
             aux = aux + j
-
         caminhos.append(aux)
 
-    #transforma os arrays de string em arrays de variaveis gurobi
+    # Transforma os arrays de string em arrays de variaveis Gurobi
     for i in caminhos:
-
         caminho_gurobi = []
-
         for j in range(0, len(i)):
-
-            #variables = m.addVars(lista_caminhos["Nome"], vtype=GRB.BINARY, name="var")
             gurobi_var = model.addVar(0.0, 1.0, 0.0, GRB.BINARY, i[j])
             model.update()
             caminho_gurobi.append(gurobi_var)
@@ -219,18 +208,23 @@ def unificar_caminho(model, lista_caminhos, caminhos_possiveis, variables):
     return novos_caminhos_gurobi
 
 
-def gerar_coluna(model, caminho):
+def gerar_coluna(caminho, constraints):
 
-    #criar coluna do gurobi
-    #https://www.gurobi.com/documentation/9.1/refman/py_column.html
+    # Criar coluna do gurobi
+    # https://www.gurobi.com/documentation/9.1/refman/py_column.html
     coluna = Column()
 
-    #pra cada item do caminho, adicionar na coluna
-     #criar uma variavel do gurobi e adicionar a coluna
+    # Para cada item do caminho, adicionar na coluna
+    # Criar uma variavel do gurobi e adicionar a coluna
     for i in range(0, len(caminho)):
-        print("macaco")
+        nome_vertice = caminho[i].getAttr('VarName')
+        cstr = ''
+        for i in constraints:
+            if i.getAttr('ConstrName') == nome_vertice:
+                cstr = i
+        coluna.addTerms(1.0, cstr);
 
-    #retornar variavel com a coluna
+    # retornar variavel com a coluna
     return coluna
 
 
@@ -239,11 +233,8 @@ def check_repetido(base, comparavel, lista_caminhos):
     retorno = False
 
     for i in range(0, len(base)):
-
         aux = base[i]
-
         for j in range(0, len(comparavel)):
-
             if comparavel[j] in base or comparavel[j][0:8] in aux:
                 retorno = True
 
@@ -254,16 +245,15 @@ def check_repetido(base, comparavel, lista_caminhos):
 # Essas devem respeitar as seguintes regras: começar sempre do primeiro vértice
 # Não repetir cor, ter sempre o tamanho do caminho original (tal como dado no
 # problema), ser convexo e não ter vértices repetidos!
-def encontrar_caminhos_validos(lista_caminhos, variables, lista_cores):
+def encontrar_caminhos_validos(lista_caminhos, lista_cores):
     # puxar isso dinamico depois
-    TAMANHO_ARRAY_ORIGINAL = len(lista_cores)
+    tamanho_array_original = len(lista_cores)
 
     # copia_iteravel = lista_caminhos.get('Nome_vertices')
     copia_iteravel = lista_caminhos['Nome_vertices']
 
     caminhos_possiveis = []
     caminho = []
-    L = 0
 
     v_adicionados = []
 
@@ -276,31 +266,26 @@ def encontrar_caminhos_validos(lista_caminhos, variables, lista_cores):
 
         # verificar se o caminho e apto a comecar uma sequencia
         if 'vertice1' in aux[0]:
-
             v_adicionados = v_adicionados + aux
             copia_iteravel.pop(0)
 
             for j in range(0, len(copia_iteravel)):
-
                 # verificar se nao foi adicionado ainda
                 if not check_repetido(aux, copia_iteravel[j],
                                       lista_caminhos):
-
                     # procurar um caminho que se combine com aux
                     if len(aux) + len(
-                            copia_iteravel[j]) <= TAMANHO_ARRAY_ORIGINAL:
+                            copia_iteravel[j]) <= tamanho_array_original:
                         caminho.append(copia_iteravel[j])
                         acumulador_contagem = acumulador_contagem + \
                                               copia_iteravel[j]
-
-                        if len(acumulador_contagem) == TAMANHO_ARRAY_ORIGINAL:
+                        if len(acumulador_contagem) == tamanho_array_original:
                             caminhos_possiveis.append(caminho)
                             acumulador_contagem = aux
                             caminho = []
                             caminho.append(aux)
-
                     if j == len(copia_iteravel) - 1 and len(
-                            aux) == TAMANHO_ARRAY_ORIGINAL:
+                            aux) == tamanho_array_original:
                         caminhos_possiveis.append(caminho)
                         acumulador_contagem = aux
                         caminho = []
@@ -311,26 +296,46 @@ def encontrar_caminhos_validos(lista_caminhos, variables, lista_cores):
     return caminhos_possiveis
 
 
+def solve_lp(pi, path, model):
+    model.optimize()
 
-def solve(model, lista_caminhos, variables, lista_cores):
+    num_cores = obter_numero_cores(path)
+    num_vertices = obter_numero_vertices(path)
+
+    for i in range(0, num_cores * num_vertices):
+        pi[i] = 234
+
+
+def solve(model, lista_caminhos, variables, lista_cores, path):
     # Criar array de constraints para limitar as colunas
-    #uma por vertice
-    num_vertices = int(max(lista_cores)) * len(lista_cores)
-    constraints = []   
+    # uma por vertice
+    num_cores = obter_numero_cores(path)
+    num_vertices = obter_numero_vertices(path)
+    constraints = []
+    nomes_vertices = []
+    pi = []
 
+    # gerar lista de nomes
     for i in range(0, num_vertices):
-        expr = LinExpr()
-        constraints.append(model.addRange(expr, 1, 1)) #dar nome a constraint p poder recuperar ela na coluna
-    
-    caminhos_possiveis = encontrar_caminhos_validos(lista_caminhos,
-                                                    variables,
-                                                    lista_cores)   
+        for j in range(0, num_cores):
+            nomes_vertices.append("vertice" + str(i + 1) + "_cor" + str(j + 1))
 
-    caminhos_possiveis = unificar_caminho(model, lista_caminhos,
-                                          caminhos_possiveis, variables)
+    for i in range(0, num_vertices * num_cores):
+        expr = LinExpr()
+        # Criando a expressão e já atribuindo o nome para poder recuperar
+        # na geração de coluna
+        constraints.append(model.addRange(expr, 1, 1, nomes_vertices[i]))
+
+    # Aplicando a heuristica desenvolvida para encontrar solução inicial
+    caminhos_possiveis = encontrar_caminhos_validos(lista_caminhos, lista_cores)
+    caminhos_possiveis = unificar_caminho(model, caminhos_possiveis)
 
     # pra cada caminho possivel, achar uma coluna
     for i in range(0, len(caminhos_possiveis)):
-        coluna = gerar_coluna(model, caminhos_possiveis[i], constraints)
+        coluna = gerar_coluna(caminhos_possiveis[i], constraints)
 
-    print("teste")
+        # adicionar ao modelo
+        model.addVar(0, 1, PRECO, GRB.CONTINUOUS, coluna)
+        model.update()
+
+    solve_lp(pi, path, model)
