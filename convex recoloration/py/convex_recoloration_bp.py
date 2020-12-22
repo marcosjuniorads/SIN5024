@@ -29,7 +29,7 @@ lista_cores_vertices = obter_lista_cores(path, True)
 lista_caminhos = adicionar_coeficientes_caminho(lista_cores_vertices,
                                                 lista_caminhos)
 
-# CRIANDO AS VARIÁVEIS DO MODELO ---------------------------------------------
+# CRIANDO AS VARIÁVEIS DO MODELO ----------------------------------------------
 # variables = adicionar_variaveis_modelo(m, lista_variaveis,
 # "modelo_var")
 variables = m.addVars(lista_caminhos["Nome"], vtype=GRB.BINARY, name="var")
@@ -41,6 +41,19 @@ for i in range(0, len(variables)):
     linear_expression.add(variables.values()[i],
                           lista_caminhos["coeficientes"][i])
     m.setObjective(linear_expression, GRB.MINIMIZE)
+
+
+# ADICIONANDO EXPRESSÃO LINEAR DA PRIMEIRA RESTRICAO --------------------------
+# Iterando sobre os vértices da solução para garantir que estejam apenas 1 cam.
+for vertice in obter_lista_vertices(path):
+    nome_vertice = 'vertice' + vertice + '_'
+    # encontrando todos os caminhos que possuem o respectivo vertice
+    index = encontrar_caminhos_com_vertice(lista_caminhos, nome_vertice)
+
+    linear_expression = LinExpr()
+    for idx in index:
+        linear_expression.add(variables.values()[idx], 1)
+    m.addConstr(linear_expression, "==", 1)
 
 
 # ADICIONANDO EXPRESSÃO LINEAR DA SEGUNDA RESTRICAO ---------------------------
@@ -74,3 +87,6 @@ solve(m, lista_caminhos, variables, lista_cores_vertices)
 
 m.optimize()
 m.display()
+
+for v in m.getVars():
+    print('%s %g' % (v.varName, v.x))

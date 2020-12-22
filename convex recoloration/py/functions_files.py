@@ -173,6 +173,15 @@ def adicionar_coeficientes_caminho(lista_cores_vertices, lista_caminhos):
     return lista_caminhos
 
 
+def encontrar_caminhos_com_vertice(data_dictionary, nome_vertice):
+    # Transformando em um dataframe para auxiliar na manutenção dos dados
+    df = pd.DataFrame(data_dictionary)
+    df['Nome_vertices'] = df['Nome_vertices'].astype(str)
+
+    filtered_data = df[df['Nome_vertices'].str.contains(nome_vertice, na=False)]
+    return filtered_data.index
+
+
 def adicionar_coluna(caminho):
     print("parei aqui")
 
