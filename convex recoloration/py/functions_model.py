@@ -1,7 +1,9 @@
 import gurobipy as gp
 from gurobipy import GRB
+from functions_files import *
 from gurobipy.gurobipy import LinExpr, quicksum
 import sys
+import pandas as pd
 
 
 def adicionar_variaveis_modelo(model, lista_variaveis, name):
@@ -19,7 +21,9 @@ def criar_funcao_objetivo(model, lista_variaveis, variables, lista_coef):
 
 def gerando_relatorio_otimizacao(diretorio_resultados, nome_arquivo, m,
                                  numero_vertices, numero_cores,
-                                 lista_vertice_cor
+                                 lista_vertice_cor, path_model=False,
+                                 lista_caminhos='',
+                                 lista_cores=''
                                  ):
     # criando o arquivo
     f = open(diretorio_resultados + nome_arquivo, "w")
@@ -45,6 +49,20 @@ def gerando_relatorio_otimizacao(diretorio_resultados, nome_arquivo, m,
           'CORES POR VÉRTICE.\n\n'
     if numero_cores != len(lista_vertice_cor['cor_atual'].unique()): print(mes)
 
+    if path_model:
+        f.write('*** CRIANDO CAMINHOS COM COMBINAÇÃO DE TODOS VÉRTICES E ' +
+                'CORES ****\n\n')
+        df = pd.DataFrame(lista_caminhos)
+        df = df[['Nome', 'Nome_vertices']]
+        f.write('Combinação de TODOS OS caminhos e vértices possíveis:\n' +
+                df.to_string(index=False) + '\n\n\n')
+
+        f.write('*** HEURÍSTICA DESENVOLVIDA PARA ENCONTRAR CAMINHOS ' +
+                'POSSÍVEIS ****\n\n')
+        f.write('Lista de caminhos possíveis SIMPLIFICADOS POR HEURISTICA:\n' +
+                str(encontrar_caminhos_validos(lista_caminhos, lista_cores)) +
+                '\n\n\n')
+
     f.write('************* DETALHES PROCESSAMENTO REALIZADO *******\n\n')
     print(m.optimize())
     f.write('\n\n\n')
@@ -54,7 +72,7 @@ def gerando_relatorio_otimizacao(diretorio_resultados, nome_arquivo, m,
         print('%s %g' % (v.varName, v.x))
     f.write('\n\n')
 
-    f.write('************* EQUAÇÕES LINEARES UTILIZADAS NO MODELO **\n\n')
+    f.write('******* EQUAÇÕES LINEARES UTILIZADAS NO MODELO ********\n\n')
     print(m.display())
 
     sys.stdout = original_stdout  # Reset the standard output to its original
