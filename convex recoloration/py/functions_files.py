@@ -66,6 +66,10 @@ def obter_combinacao_vertices(path):
     return list(comb(obter_lista_vertices(path), 3))
 
 
+def obter_primeira_cor(path):
+    return sorted(list(map(int, obter_lista_cores(path, False))))[0]
+
+
 def obter_variaveis(path):
     # obtendo listas de vertices e cores
     vertices = obter_lista_vertices(path)
@@ -102,7 +106,7 @@ def obter_variaveis(path):
     return vertice_cor.loc[:, vertice_cor.columns != 'vertice_cor']
 
 
-def obter_caminho_possiveis_porcor(path):
+def obter_caminho_possiveis_porcor(path, caminhos_unicos=False):
     # Retornando todas as combinações possíves de caminho em um grafo
     combinacoes = []
     vertices = obter_lista_vertices(path)
@@ -110,13 +114,14 @@ def obter_caminho_possiveis_porcor(path):
 
     # Para cada cor, encontrando os caminhos possíveis
     for cor in cores:
-        combinacoes.append(list(itertools.combinations([k + cor for k in
+        combinacoes.append(list(itertools.combinations([k + '_' + cor for k in
                                                         vertices], 2)))
 
     # Adicionando caminhos únicos também dentre as combinações possíveis
-    paths_unicos = [str(v) + str(c) for v in vertices for c in cores]
-    for p in paths_unicos:
-        combinacoes.append([[p, p]])
+    if caminhos_unicos:
+        paths_unicos = [str(v) + str(c) for v in vertices for c in cores]
+        for p in paths_unicos:
+            combinacoes.append([[p, p]])
 
     combinacoes = list(itertools.chain(*combinacoes))
 
@@ -126,9 +131,9 @@ def obter_caminho_possiveis_porcor(path):
     n = 0
 
     for item in combinacoes:
-        vertice_inicio = int(item[0][0:1])
-        vertice_fim = int(item[1][0:1])
-        cor = int(item[1][1:2])
+        vertice_inicio = int(item[0].split('_')[0])
+        vertice_fim = int(item[1].split('_')[0])
+        cor = int(item[1].split('_')[1])
         n += 1
         nome = 'caminho' + str(n) + '_cor' + str(cor)
 
@@ -335,7 +340,7 @@ def solve(model, lista_caminhos, variables, lista_cores, path):
         coluna = gerar_coluna(caminhos_possiveis[i], constraints)
 
         # adicionar ao modelo
-        model.addVar(0, 1, PRECO, GRB.CONTINUOUS, coluna)
+        model.addVar(0, 1, cst_red, GRB.CONTINUOUS, coluna)
         model.update()
 
     solve_lp(pi, path, model)
