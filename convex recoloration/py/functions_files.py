@@ -1,7 +1,10 @@
+import gurobipy as gp
+from gurobipy import GRB
 import pandas as pd
 import numpy as np
 import itertools
 from itertools import combinations as comb
+from gurobipy.gurobipy import Column, LinExpr
 
 
 def obter_numero_vertices(path):
@@ -173,8 +176,64 @@ def adicionar_coeficientes_caminho(lista_cores_vertices, lista_caminhos):
     return lista_caminhos
 
 
-def adicionar_coluna(caminho):
-    print("parei aqui")
+def unificar_caminho(model, lista_caminhos, caminhos_possiveis, variables):
+    
+    caminhos = []
+    novos_caminhos_gurobi = []
+    
+    #separa os caminhos em arrays individuais    
+    for i in range(0, len(caminhos_possiveis)):
+        
+        aux = []
+        
+        for j in caminhos_possiveis[i]:
+            aux = aux + j
+            
+        caminhos.append(aux)
+        
+    #transforma os arrays de string em arrays de variaveis gurobi
+    for i in caminhos:
+        
+        caminho_gurobi = []
+        
+        for j in range(0, len(i)):
+            
+            #variables = m.addVars(lista_caminhos["Nome"], vtype=GRB.BINARY, name="var")
+            gurobi_var = model.addVar(0.0, 1.0, 0.0, GRB.BINARY, i[j])
+            model.update()
+            
+            caminho_gurobi.append(gurobi_var)
+            
+        novos_caminhos_gurobi.append(caminho_gurobi) 
+    
+    return novos_caminhos_gurobi
+
+
+def gerar_coluna(model, caminho):
+        
+    #criar coluna do gurobi
+    #https://www.gurobi.com/documentation/9.1/refman/py_column.html
+    coluna = Column()
+    
+    #pra cada item do caminho, adicionar na coluna
+     #criar uma variavel do gurobi e adicionar a coluna
+    for i in range(0, len(caminho)):
+        
+        #constr = 
+        
+        
+        #coluna.addTerms(1, constr)
+        print("macaco")
+    
+   
+   
+   
+    #retornar variavel com a coluna
+    return coluna
+    
+    
+    
+    
 
 
 # Verifica se nenhum elemento do comparavel se repete na base
@@ -254,13 +313,26 @@ def encontrar_caminhos_validos(lista_caminhos, variables, lista_cores):
     return caminhos_possiveis
 
 
+
 def solve(model, lista_caminhos, variables, lista_cores):
+    
+    # Criar array de constraints para limitar as colunas
+    #uma por vertice
+    num_vertices = int(max(lista_cores)) * len(lista_cores)
+    constraints = []   
+    
+    for i in range(0, num_vertices):
+        expr = LinExpr()
+        constraints.append(model.addRange(expr, 1, 1)) #dar nome a constraint p poder recuperar ela na coluna
+    
     caminhos_possiveis = encontrar_caminhos_validos(lista_caminhos,
                                                     variables,
-                                                    lista_cores)
+                                                    lista_cores)   
+    
+    caminhos_possiveis = unificar_caminho(model, lista_caminhos, caminhos_possiveis, variables)
 
     # pra cada caminho possivel, achar uma coluna
     for i in range(0, len(caminhos_possiveis)):
-        coluna = adicionar_coluna(caminhos_possiveis[i])
+        coluna = gerar_coluna(model, caminhos_possiveis[i], constraints)
 
     print("teste")

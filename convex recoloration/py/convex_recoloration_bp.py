@@ -5,10 +5,10 @@ from functions_files import *
 import os
 
 # path do arquivo
-diretorio = str('E:\\SIN5024\\convex recoloration\\instancias\\')
-diretorio_resultados = str('E:\\SIN5024\\convex recoloration\\py\\results\\')
-#diretorio = str('C:\\Users\\Matheus Ancelmo\\Documents\\Mestrado\\instancias\\')
-#diretorio_resultados = str('C:\\Users\\Matheus Ancelmo\\Documents\\Mestrado\\results\\')
+#diretorio = str('E:\\SIN5024\\convex recoloration\\instancias\\')
+#diretorio_resultados = str('E:\\SIN5024\\convex recoloration\\py\\results\\')
+diretorio = str('C:\\Users\\Matheus Ancelmo\\Documents\\Mestrado\\instancias\\')
+diretorio_resultados = str('C:\\Users\\Matheus Ancelmo\\Documents\\Mestrado\\results\\')
 
 # obtendo a lista de arquivos
 # files = os.listdir(diretorio)
@@ -63,10 +63,6 @@ for row in list(range(len(dictionary["cor1"]))):
         linear_expression.add(variables[dictionary[key][row]], 1)
     m.addConstr(linear_expression, "<=", 1)
 
-
-# ENCONTRANDO CAMINHOS VÁLIDOS / HEURISTICA MATHEUS ---------------------------
-heuristica = encontrar_caminhos_validos(lista_caminhos, variables,
-                                        lista_cores_vertices)
 
 # Depois que terminar de montar o modelo
 # Chamar o metodo solve ao inves de fazer model.solve()
