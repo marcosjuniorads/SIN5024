@@ -63,20 +63,27 @@ for file in files:
         m.addConstr(linear_expression, "==", 1)
 
     # ADICIONANDO EXPRESSÃO LINEAR DA SEGUNDA RESTRICAO -----------------------
+    # Impedindo que um mesmo caminho, composto pelos mesmos vértices, porém de
+    # cores distintas sejam pintados de mais de uma cor. Todos os caminhos =
+    # com cores diferentes tem que ser <= 1.
     dictionary = {}
     # Criando as variavéis no dicionario por cor, antes de popular os caminhos
     for item in obter_lista_cores(path, False):
         dictionary['cor' + item] = []
 
-    # Preenchendo o dicionário com a lista de caminhos para cada cor
+    # Preenchendo o dicionário com a lista de caminhos para cada cor.
+    # Abaixo, busco todos os caminhos que são pintados de uma mesma cor e os
+    # adiciono em uma lista que tem o nome da cor.
     for cor in obter_lista_cores(path, False):
         nome_cor = '_cor' + cor
-        dictionary['cor' + cor] = list(filter(lambda k: nome_cor in k,
-                                              lista_caminhos['Nome']))
+        tmp_list = list(filter(lambda k: nome_cor in k, lista_caminhos['Nome']))
+        dictionary['cor' + cor] = [string for string in tmp_list if
+                                   string.endswith('cor' + cor)]
 
     # Criando a resrtrição linear que IMPEDE com que um mesmo caminho seja
     # pintado de duas ou mais cores
-    for row in list(range(len(dictionary["cor" + obter_primeira_cor(path)]))):
+    for row in list(range(len(dictionary["cor" +
+                                         str(obter_primeira_cor(path))]))):
         linear_expression = LinExpr()
         for key in dictionary.keys():
             linear_expression.add(variables[dictionary[key][row]], 1)
@@ -106,4 +113,4 @@ for file in files:
 
 # Depois que terminar de montar o modelo
 # Chamar o metodo solve ao inves de fazer model.solve()
-solve(m, lista_caminhos, variables, lista_cores_vertices, path)
+# solve(m, lista_caminhos, variables, lista_cores_vertices, path)
